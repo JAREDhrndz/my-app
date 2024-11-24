@@ -1,0 +1,94 @@
+/* src/section1.css */
+.section1 {
+    background-color: black;
+    color: white;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    transform: translateY(-90px); /* Ajusta el valor para mover hacia arriba */
+}
+
+
+.section-content {
+    display: flex;
+    justify-content: center; /* Centra el contenido (texto) horizontalmente */
+    align-items: center; /* Centra el contenido verticalmente */
+    width: 100%;
+    max-width: 1200px; /* Limita el ancho máximo */
+    margin: 0 20px;
+}
+
+.text-content {
+    flex: 1;
+    max-width: 500px; /* Limita el ancho del texto */
+    text-align: center; /* Centra el texto dentro del contenedor */
+}
+
+.text-content h2 {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    color: #b48250;
+    font-family: "Merriweather", serif;
+    font-weight: 400;
+    font-style: regular;
+}
+
+.text-content p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: white;
+    font-family: "Merriweather", serif;
+    font-weight: 400;
+    font-style: italic;
+}
+
+#banner1 {
+    flex-shrink: 0;
+    display: flex;
+    justify-content: flex-end; /* Alinea la imagen a la derecha */
+    align-items: center;
+    position: absolute;
+    right: 0;
+    height: 100%;
+    max-width: 25%;
+}
+
+#banner1 img {
+    width: 100%; /* La imagen ocupa el 100% del ancho de su contenedor */
+    height: auto; /* Mantiene la proporción de la imagen */
+    object-fit: cover; /* Ajusta la imagen para cubrir el área sin distorsión */
+    border-radius: 30px 0 0 30px; /* Esquinas redondeadas solo en la parte superior e inferior izquierda */
+    transition: transform 0.3s ease-in-out; /* Animación suave */
+}
+
+#banner1:hover img {
+    transform: scale(1.05); /* Imagen aumenta ligeramente cuando se pasa el ratón */
+}
+
+#banner2 {
+    flex-shrink: 0;
+    display: flex;
+    justify-content: flex-start; /* Alinea la imagen a la izquierda */
+    align-items: center;
+    position: absolute;
+    left: 0; /* Asegura que la imagen esté pegada al borde izquierdo */
+    height: 100%;
+    max-width: 25%;
+    transform: translateY(20%); /* Mueve la imagen hacia abajo */
+}
+
+
+#banner2 img {
+    width: 100%; /* La imagen ocupa el 100% del ancho de su contenedor */
+    height: auto; /* Mantiene la proporción de la imagen */
+    object-fit: cover; /* Ajusta la imagen para cubrir el área sin distorsión */
+    border-radius: 0 30px 30px 0; /* Esquinas redondeadas solo en la parte superior e inferior izquierda */
+    transition: transform 0.3s ease-in-out; /* Animación suave */
+}
+
+#banner2:hover img {
+    transform: scale(1.05); /* Imagen aumenta ligeramente cuando se pasa el ratón */
+}

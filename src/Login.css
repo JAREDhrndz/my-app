@@ -1,0 +1,102 @@
+/* Estilos para el contenedor de login */
+body{
+    background-color: black;
+}
+
+.login-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#login-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 300px;
+    padding: 20px;
+    border: 1px solid rgba(140, 140, 140, 0.5);
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f90f;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    overflow: hidden;
+    transition: border 0.2s ease;
+    height: auto;
+    max-height: 90vh;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #ffffff;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: white;
+}
+
+input {
+    width: 100%; /* Asegura que los inputs ocupen el 100% del contenedor */
+    padding: 8px;
+    border: 1px solid #898989;
+    border-radius: 4px;
+    background-color: #43434326;
+    color: white;
+    margin-bottom: 10px; /* Espaciado entre los campos */
+    box-sizing: border-box; /* Asegura que el padding no afecte al ancho total */
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #b48250;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #b48250;
+}
+
+/* Efecto de resplandor en el contorno */
+#login-container:hover {
+    border: 2px solid rgba(180, 130, 80, 0.5);
+    box-shadow: 0 0 10px rgba(180, 130, 80, 0.6), 0 0 20px rgba(180, 130, 80, 0.4);
+}
+
+#registrarse, #iniciar-sesion {
+    color: rgb(180, 130, 80);
+    cursor: pointer;
+    text-align: center;
+}
+
+#registro-enlace, #login-enlace {
+    text-align: center;
+    margin-top: 10px;
+    color: white;
+    font-size: 15px;
+}
+
+#registro-enlace, #login-enlace {
+    width: 100%;
+    text-align: center;
+}
