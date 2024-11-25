@@ -1,11 +1,13 @@
 <?php
-include 'db.php';
+header('Content-Type: application/json');
+include 'dbConnection.php'; // Archivo que gestiona la conexión a la base de datos
 
 try {
-    $stmt = $pdo->query("SELECT * FROM ventas");
-    $ventas = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    echo json_encode($ventas);
+    $query = $conn->prepare("SELECT * FROM ventas");
+    $query->execute();
+    $result = $query->fetchAll(PDO::FETCH_ASSOC);
+    echo json_encode($result);
 } catch (PDOException $e) {
-    echo json_encode(['error' => $e->getMessage()]);
+    echo json_encode(['error' => 'Error al obtener las ventas: ' . $e->getMessage()]);
 }
 ?>

@@ -3,7 +3,7 @@ require 'db.php';
 
 try {
     $pdo = require 'db.php';
-    $query = $pdo->query("SELECT * FROM usuarios");
+    $query = $pdo->query("SELECT * FROM servicios");
     $usuarios = $query->fetchAll(PDO::FETCH_ASSOC);
     echo json_encode($usuarios);
 } catch (Exception $e) {

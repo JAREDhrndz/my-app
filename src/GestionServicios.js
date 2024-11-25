@@ -118,7 +118,7 @@ const GestionServicios = () => {
     };
   
     try {
-      const response = await fetch(`http://localhost/backend/updateServicio.phpid=${servicioActual.Id}`, {
+      const response = await fetch(`http://localhost/backend/updateServicio.php`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

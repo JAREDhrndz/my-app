@@ -1,41 +1,36 @@
 <?php
 header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: *'); 
-header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE'); 
-header('Access-Control-Allow-Headers: Content-Type');
+include 'dbConnection.php';
 
-$conexion = new mysqli("localhost", "root", "", "canesa");
+$id = $_GET['id'];
+$data = json_decode(file_get_contents("php://input"), true);
 
-if ($conexion->connect_error) {
-    echo json_encode(["status" => "error", "message" => "Error en la conexión a la base de datos"]);
-    exit;
-}
+if ($data && $id) {
+    try {
+        $query = $conn->prepare("UPDATE ventas SET 
+                                    Descripcion = :Descripcion,
+                                    Tipo_de_Pago = :Tipo_de_Pago,
+                                    Total_pagado = :Total_pagado,
+                                    Fecha = :Fecha,
+                                    Num_usuario = :Num_usuario,
+                                    Id_proveedor_servicio = :Id_proveedor_servicio,
+                                    Num_empleado = :Num_empleado
+                                WHERE Id = :Id");
+        $query->bindParam(':Descripcion', $data['Descripcion']);
+        $query->bindParam(':Tipo_de_Pago', $data['Tipo_de_Pago']);
+        $query->bindParam(':Total_pagado', $data['Total_pagado']);
+        $query->bindParam(':Fecha', $data['Fecha']);
+        $query->bindParam(':Num_usuario', $data['Num_usuario']);
+        $query->bindParam(':Id_proveedor_servicio', $data['Id_proveedor_servicio']);
+        $query->bindParam(':Num_empleado', $data['Num_empleado']);
+        $query->bindParam(':Id', $id);
+        $query->execute();
 
-// Procesar PUT
-if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
-    parse_str(file_get_contents("php://input"), $data);
-    $descripcion = $data['Descripcion'];
-    $fecha = $data['Fecha'];
-    $tipo_de_pago = $data['Tipo_de_Pago'];
-    $total_pagado = $data['Total_pagado'];
-    $num_usuario = $data['Num_usuario'];
-    $id_proveedor_servicio = $data['Id_proveedor_servicio'];
-    $num_empleado = $data['Num_empleado'];
-    $id = $_GET['id']; // Recupera el ID de la URL
-
-    $query = "UPDATE ventas SET Descripcion = ?, Tipo_de_Pago = ?, Total_pagado = ?, Fecha = ?, Num_usuario = ?, Id_proveedor_servicio = ?, Num_empleado = ? WHERE Id = ?";
-    $stmt = $conexion->prepare($query);
-    $stmt->bind_param("ssdsdiii", $descripcion, $tipo_de_pago, $total_pagado, $fecha, $num_usuario, $id_proveedor_servicio, $num_empleado, $id);
-
-    if ($stmt->execute()) {
-        echo json_encode(["status" => "success", "message" => "Venta actualizada exitosamente"]);
-    } else {
-        echo json_encode(["status" => "error", "message" => "Error al actualizar venta"]);
+        echo json_encode(['status' => 'success']);
+    } catch (PDOException $e) {
+        echo json_encode(['error' => 'Error al actualizar la venta: ' . $e->getMessage()]);
     }
-    $stmt->close();
 } else {
-    echo json_encode(["status" => "error", "message" => "Método no permitido"]);
+    echo json_encode(['error' => 'Datos no válidos o ID faltante']);
 }
-
-$conexion->close();
 ?>

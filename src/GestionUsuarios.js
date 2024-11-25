@@ -104,8 +104,8 @@ const GestionUsuarios = () => {
         delete datosActualizados.Contraseña; // Elimina la contraseña si está vacía
       }
   
-      const response = await fetch(`http://localhost/backend/updateUsuario.php?numUsuario=${usuarioActual.Num_Usuario}`, {
-        method: 'PUT',
+      const response = await fetch(`http://localhost/backend/updateUsuario.php`, {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
