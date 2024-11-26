@@ -68,7 +68,6 @@ const GestionUsuarios = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('enviando datos',formData);
     try {
       const response = await fetch('http://localhost/backend/addUsuario.php', {
         method: 'POST',
@@ -99,33 +98,33 @@ const GestionUsuarios = () => {
   const handleUpdateSubmit = async (e) => {
     e.preventDefault();
     try {
-      const datosActualizados = { ...formData };
-      if (!formData.Contraseña) {
-        delete datosActualizados.Contraseña; // Elimina la contraseña si está vacía
-      }
-  
-      const response = await fetch(`http://localhost/backend/updateUsuario.php?numUsuario=${usuarioActual.Num_Usuario}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(datosActualizados),
-      });
-  
-      if (response.ok) {
-        setUsuarios(usuarios.map((usuario) =>
-          usuario.Num_Usuario === usuarioActual.Num_Usuario ? { ...usuario, ...datosActualizados } : usuario
-        ));
-        setMostrarFormulario(false);
-        setUsuarioActual(null);
-      } else {
-        console.error('Error al actualizar el usuario');
-      }
+        const datosActualizados = { ...formData };
+        if (!formData.Contraseña) {
+            delete datosActualizados.Contraseña; // Elimina la contraseña si está vacía
+        }
+
+        const response = await fetch(`http://localhost/backend/updateUsuario.php?numUsuario=${usuarioActual.Num_Usuario}`, {
+            method: 'POST', // Cambiado de PUT a POST
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(datosActualizados), // Envía los datos como JSON
+        });
+
+        if (response.ok) {
+            setUsuarios(usuarios.map((usuario) =>
+                usuario.Num_Usuario === usuarioActual.Num_Usuario ? { ...usuario, ...datosActualizados } : usuario
+            ));
+            setMostrarFormulario(false);
+            setUsuarioActual(null);
+        } else {
+            console.error('Error al actualizar el usuario');
+        }
     } catch (error) {
-      console.error('Error al actualizar el usuario:', error);
+        console.error('Error al actualizar el usuario:', error);
     }
-  };
-  
+};
+
 
   const toggleFormulario = () => {
     setMostrarFormulario(!mostrarFormulario);
@@ -204,15 +203,19 @@ const GestionUsuarios = () => {
               <option value="SuperAdministrador">SuperAdministrador</option>
             </select>
 
-            <label htmlFor="input-contraseña">Contraseña:</label>
-            <input
-              id="input-contraseña"
-              type="password"
-              name="Contraseña"
-              value={formData.Contraseña}
-              onChange={handleChange}
-              required
-            />
+            {!usuarioActual && (
+              <>
+                <label htmlFor="input-contraseña">Contraseña:</label>
+                <input
+                  id="input-contraseña"
+                  type="password"
+                  name="Contraseña"
+                  value={formData.Contraseña}
+                  onChange={handleChange}
+                  required
+                />
+              </>
+            )}
 
             <div className="btn-container-form">
               <button type="submit" className="btn-update">
@@ -237,18 +240,18 @@ const GestionUsuarios = () => {
 
       {!mostrarFormulario && (
         <table className="table-general">
-<thead>
-  <tr>
-    <th className="column-id">ID</th>
-    <th className="column-nombre">Nombre</th>
-    <th className="column-correo">Correo</th>
-    <th className="column-telefono">Teléfono</th>
-    <th className="column-direccion">Dirección</th>
-    <th className="column-tipo-usuario">Tipo de Usuario</th>
-    <th className="column-contraseña">Contraseña</th>
-    <th className="column-acciones">Acciones</th>
-  </tr>
-</thead>
+          <thead>
+            <tr>
+              <th className="column-id">ID</th>
+              <th className="column-nombre">Nombre</th>
+              <th className="column-correo">Correo</th>
+              <th className="column-telefono">Teléfono</th>
+              <th className="column-direccion">Dirección</th>
+              <th className="column-tipo-usuario">Tipo de Usuario</th>
+              <th className="column-contraseña">Contraseña</th>
+              <th className="column-acciones">Acciones</th>
+            </tr>
+          </thead>
           <tbody>
             {usuarios.length > 0 ? (
               usuarios.map((usuario) => (
@@ -259,7 +262,7 @@ const GestionUsuarios = () => {
                   <td>{usuario.Telefono}</td>
                   <td>{usuario.Direccion}</td>
                   <td>{usuario.Tipo_usuario}</td>
-                  <td>********</td> {/* Mostramos un texto en lugar de la contraseña */}
+                  <td>********</td>
                   <td>
                     <button onClick={() => handleUpdate(usuario)} className="btn-icon">
                       <img src={editIcon} alt="Editar" />
@@ -271,9 +274,9 @@ const GestionUsuarios = () => {
                 </tr>
               ))
             ) : (
-              <tr>
+              <tr className="no-data">
                 <td colSpan="8">No hay usuarios registrados.</td>
-                </tr>
+              </tr>
             )}
           </tbody>
         </table>

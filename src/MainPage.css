@@ -36,7 +36,7 @@
 }
 
 .layer2 {
-    background-image: url('./assets/capa2.png');
+    background-image: url('./assets/capa5.png');
     z-index: 2;
     position: absolute; /* Asegúrate de que esté posicionada correctamente */
     background-size: cover;
@@ -48,7 +48,7 @@
 
 .layer3 {
     background: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0) 10%), 
-                url('./assets/capa3.png');
+                url('./assets/capa4.png');
     z-index: 3;
     background-size: cover; /* Asegúrate de que la imagen cubra el área */
     background-repeat: no-repeat;

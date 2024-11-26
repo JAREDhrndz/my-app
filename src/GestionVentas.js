@@ -52,6 +52,7 @@ const GestionVentas = () => {
   const handleUpdate = (venta) => {
     setVentaActual(venta);
     setFormData({
+      Id: venta.Id,  // Incluye el Id en formData
       Descripcion: venta.Descripcion,
       Tipo_de_Pago: venta.Tipo_de_Pago,
       Total_pagado: venta.Total_pagado,
@@ -61,7 +62,8 @@ const GestionVentas = () => {
       Num_empleado: venta.Num_empleado
     });
     setMostrarFormulario(true);
-  };
+};
+
 
   const handleChange = (e) => {
     setFormData({
@@ -102,29 +104,34 @@ const GestionVentas = () => {
 
   const handleUpdateSubmit = async (e) => {
     e.preventDefault();
-    console.log('Datos que se van a enviar:', formData); // Verifica los datos que vas a enviar
+    console.log('Datos que se van a enviar:', formData);
     try {
-        const response = await fetch(`http://localhost/backend/updateVentas.php?id=${ventaActual.Id}`, {
-            method: 'PUT',
+        const response = await fetch(`http://localhost/backend/updateVentas.php`, {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(formData),
         });
 
-        if (response.ok) {
-            setVentas(ventas.map(venta => 
-                venta.Id === ventaActual.Id ? { ...venta, ...formData } : venta
+        const result = await response.json();
+        if (response.ok && result.status === "success") {
+            // Actualizar la UI con la venta actualizada
+            setVentas(ventas.map((venta) =>
+                venta.Id === ventaActual.Id ? { ...venta, ...result.data } : venta
             ));
             setMostrarFormulario(false);
             setVentaActual(null);
+            console.log('Venta actualizada correctamente');
         } else {
-            console.error('Error al actualizar la venta');
+            console.error('Error al actualizar la venta:', result.message || result.status);
         }
     } catch (error) {
         console.error('Error al actualizar la venta:', error);
     }
 };
+
+
 
 
   const toggleFormulario = () => {
@@ -263,40 +270,43 @@ const GestionVentas = () => {
           <tbody>
   {ventas.length > 0 ? (
     ventas.map((venta) => (
-      <tr key={venta.Id}>  {/* Usando Id como key única */}
-        <td>{venta.Id}</td>
-        <td>{venta.Descripcion}</td>
-        <td>{venta.Tipo_de_Pago}</td>
-        <td>{venta.Total_pagado}</td>
-        <td>{venta.Fecha}</td>
-        <td>{venta.Num_usuario}</td>
-        <td>{venta.Id_proveedor_servicio}</td>
-        <td>{venta.Num_empleado}</td>
-        <td>
-          <div className="btn-actions">
-            <button
-              className="btn-icon"
-              onClick={() => handleUpdate(venta)}
-            >
-              <img
-                className="icon-action"
-                src={editIcon}
-                alt="Editar"
-              />
-            </button>
-            <button
-              className="btn-icon"
-              onClick={() => handleDelete(venta.Id)}
-            >
-              <img
-                className="icon-action"
-                src={deleteIcon}
-                alt="Eliminar"
-              />
-            </button>
-          </div>
-        </td>
-      </tr>
+      // Verifica que `venta.Id` esté presente y sea válido
+      venta.Id ? (
+        <tr key={venta.Id}>
+          <td>{venta.Id}</td>
+          <td>{venta.Descripcion}</td>
+          <td>{venta.Tipo_de_Pago}</td>
+          <td>{venta.Total_pagado}</td>
+          <td>{venta.Fecha}</td>
+          <td>{venta.Num_usuario}</td>
+          <td>{venta.Id_proveedor_servicio}</td>
+          <td>{venta.Num_empleado}</td>
+          <td>
+            <div className="btn-actions">
+              <button
+                className="btn-icon"
+                onClick={() => handleUpdate(venta)}
+              >
+                <img
+                  className="icon-action"
+                  src={editIcon}
+                  alt="Editar"
+                />
+              </button>
+              <button
+                className="btn-icon"
+                onClick={() => handleDelete(venta.Id)}
+              >
+                <img
+                  className="icon-action"
+                  src={deleteIcon}
+                  alt="Eliminar"
+                />
+              </button>
+            </div>
+          </td>
+        </tr>
+      ) : null // Si no tiene Id, no renderiza esa fila
     ))
   ) : (
     <tr>

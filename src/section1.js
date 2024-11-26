@@ -16,10 +16,10 @@ const Section1 = () => {
                     </p>
                 </div>
                 <div className="image-content" id='banner1'>
-                    <img src={image1} alt="Imagen 1" data-aos='flip-down'/>
+                    <img src={image1} alt="Imagen 1" data-aos="fade-left"/>
                 </div>
                 <div className="image-content-2" id='banner2'>
-                    <img src={image2} alt="Imagen 2" data-aos='flip-down'/>
+                    <img src={image2} alt="Imagen 2" data-aos="fade-right"/>
                 </div>
             </div>
         </div>

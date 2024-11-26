@@ -52,8 +52,6 @@ const GestionServicios = () => {
       console.error('Error al eliminar el servicio:', error);
     }
   };
-  
-  
 
   const handleUpdate = (servicio) => {
     setServicioActual(servicio);
@@ -74,21 +72,21 @@ const GestionServicios = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     // Muestra los datos que vas a enviar al backend
     console.log('Datos enviados al backend:', formData);
-  
+
     try {
       const formDataToSend = new FormData();
       formDataToSend.append('Nombre', formData.Nombre);
       formDataToSend.append('Descripcion', formData.Descripcion);
       formDataToSend.append('Costo', formData.Costo);
-  
+
       const response = await fetch('http://localhost/backend/addServicio.php', {
         method: 'POST',
         body: formDataToSend,
       });
-  
+
       if (response.ok) {
         const data = await response.json();
         if (data.status === 'success') {
@@ -104,50 +102,44 @@ const GestionServicios = () => {
       console.error('Error al enviar el servicio:', error);
     }
   };
-  
-  
 
   const handleUpdateSubmit = async (e) => {
     e.preventDefault();
-    
-    const formData = {
-      nombre: servicioActual.Nombre,
-      descripcion: servicioActual.Descripcion,
-      costo: servicioActual.Costo,
-      id: servicioActual.Id
+  
+    // Verificar el valor actual de servicioActual
+    console.log("Servicio Actual antes de enviar:", servicioActual);
+  
+    // Preparar los datos del formulario, asegurándote de que el id provenga de servicioActual
+    const data = {
+      id: servicioActual.Id,  // Usar el id del servicio actual, no de formData
+      nombre: formData.Nombre,
+      descripcion: formData.Descripcion,
+      costo: formData.Costo,
     };
   
+    console.log("Datos enviados al servidor:", data);  // Verifica que el id esté presente
+  
     try {
-      const response = await fetch(`http://localhost/backend/updateServicio.phpid=${servicioActual.Id}`, {
-        method: 'POST',
+      const response = await fetch("http://localhost/backend/updateServicio.php", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData), // Asegúrate de que los datos sean JSON
+        body: JSON.stringify(data),  // Enviar todo como JSON en el cuerpo
       });
   
-      if (response.ok) {
-        const result = await response.json();
-        if (result.status === 'success') {
-          setServicios(
-            servicios.map((servicio) =>
-              servicio.Id === servicioActual.Id ? { ...servicio, ...formData } : servicio
-            )
-          );
-          setMostrarFormulario(false);
-          setServicioActual(null);
-        } else {
-          console.error('Error al actualizar el servicio');
-        }
+      const result = await response.json();
+      console.log("Respuesta JSON del servidor:", result);
+  
+      if (result.status === "success") {
+        console.log("Servicio actualizado correctamente.");
       } else {
-        console.error('Error en la respuesta del servidor');
+        console.log("Error en la actualización:", result.message);
       }
     } catch (error) {
-      console.error('Error al actualizar el servicio:', error);
+      console.error("Error al enviar los datos:", error);
     }
   };
-  
-  
 
   const toggleFormulario = () => {
     setMostrarFormulario(!mostrarFormulario);
@@ -174,55 +166,54 @@ const GestionServicios = () => {
         <div className="form-add-update">
           <h2 className="title">{servicioActual ? 'Actualizar Servicio' : 'Agregar Nuevo Servicio'}</h2>
           <form onSubmit={servicioActual ? handleUpdateSubmit : handleSubmit}>
-  <label htmlFor="Nombre">Nombre del Servicio:</label>
-  <input
-    type="text"
-    id="Nombre" // ID agregado
-    name="Nombre"
-    value={formData.Nombre}
-    onChange={handleChange}
-    required
-  />
+            <label htmlFor="Nombre">Nombre del Servicio:</label>
+            <input
+              type="text"
+              id="Nombre"
+              name="Nombre"
+              value={formData.Nombre}
+              onChange={handleChange}
+              required
+            />
 
-  <label htmlFor="Descripcion">Descripción:</label>
-  <input
-    type="text"
-    id="Descripcion" // ID agregado
-    name="Descripcion"
-    value={formData.Descripcion}
-    onChange={handleChange}
-    required
-  />
+            <label htmlFor="Descripcion">Descripción:</label>
+            <input
+              type="text"
+              id="Descripcion"
+              name="Descripcion"
+              value={formData.Descripcion}
+              onChange={handleChange}
+              required
+            />
 
-  <label htmlFor="Costo">Costo:</label>
-  <input
-    type="number"
-    id="Costo" // ID agregado
-    name="Costo"
-    value={formData.Costo}
-    onChange={handleChange}
-    required
-  />
+            <label htmlFor="Costo">Costo:</label>
+            <input
+              type="number"
+              id="Costo"
+              name="Costo"
+              value={formData.Costo}
+              onChange={handleChange}
+              required
+            />
 
-  <div className="btn-container-form">
-    <button type="submit" className="btn-update">
-      <span className="icon icon-1"></span>
-      <span className="gradient-update"></span>
-      <span className="gradient-update2"></span>
-      <span className="insert-background"></span>
-      <span className="button-update">{servicioActual ? 'Actualizar Servicio' : 'Agregar Servicio'}</span>
-    </button>
+            <div className="btn-container-form">
+              <button type="submit" className="btn-update">
+                <span className="icon icon-1"></span>
+                <span className="gradient-update"></span>
+                <span className="gradient-update2"></span>
+                <span className="insert-background"></span>
+                <span className="button-update">{servicioActual ? 'Actualizar Servicio' : 'Agregar Servicio'}</span>
+              </button>
 
-    <button type="button" className="btn-add" onClick={toggleFormulario}>
-      <span className="icon icon-1"></span>
-      <span className="gradient-back"></span>
-      <span className="gradient-back2"></span>
-      <span className="insert-background"></span>
-      <span className="button-back">Regresar a la lista</span>
-    </button>
-  </div>
-</form>
-
+              <button type="button" className="btn-add" onClick={toggleFormulario}>
+                <span className="icon icon-1"></span>
+                <span className="gradient-back"></span>
+                <span className="gradient-back2"></span>
+                <span className="insert-background"></span>
+                <span className="button-back">Regresar a la lista</span>
+              </button>
+            </div>
+          </form>
         </div>
       )}
 

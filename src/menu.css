@@ -12,16 +12,17 @@
 }
 
 #menu-title {
-    font-size: 130px;
+    font-size: 140px;
     position: absolute;
     color: transparent; /* Hace el texto transparente para que se vea el fondo */
     z-index: -5;
-    margin-top: 0px;
+    margin-top: -10px;
     left: 50%;
     transform: translateX(-50%);
     background-image: linear-gradient(to bottom, rgb(38, 38, 38) 30%, rgb(0, 0, 0) 70%);
     background-clip: text; /* Aplica el degradado solo al texto */
     padding-bottom: 10px;
+    font-family: 'Chakra Petch';
 }
 
 
