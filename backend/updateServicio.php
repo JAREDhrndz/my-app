@@ -1,22 +1,37 @@
 <?php
-header('Content-Type: application/json');
-require 'db.php'; // Conexión a la base de datos
+header("Content-Type: application/json");
 
-if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
-    parse_str(file_get_contents("php://input"), $putData);
+$host = "localhost";
+$user = "root";
+$password = "";
+$dbname = "canesa";
 
-    $id = $putData['id'];
-    $nombre = $putData['nombre'];
-    $descripcion = $putData['descripcion'];
-    $costo = $putData['costo'];
+$conn = new mysqli($host, $user, $password, $dbname);
 
-    try {
-        $query = $pdo->prepare("UPDATE servicios SET Nombre = ?, Descripcion = ?, Costo = ? WHERE Id = ?");
-        $query->execute([$nombre, $descripcion, $costo, $id]);
-
-        echo json_encode(['status' => 'success']);
-    } catch (PDOException $e) {
-        echo json_encode(['status' => 'error', 'message' => $e->getMessage()]);
-    }
+if ($conn->connect_error) {
+    echo json_encode(["status" => "error", "message" => "Conexión fallida: " . $conn->connect_error]);
+    exit();
 }
+
+$data = json_decode(file_get_contents("php://input"), true);
+
+if (isset($data['id'], $data['nombre'], $data['descripcion'], $data['costo'])) {
+    $id = $data['id'];
+    $nombre = $conn->real_escape_string($data['nombre']);
+    $descripcion = $conn->real_escape_string($data['descripcion']);
+    $costo = $conn->real_escape_string($data['costo']);
+
+    $sql = "UPDATE servicios SET Nombre = '$nombre', Descripcion = '$descripcion', Costo = '$costo' WHERE Id = $id";
+
+    if ($conn->query($sql) === TRUE) {
+        echo json_encode(["status" => "success", "message" => "Servicio actualizado correctamente."]);
+    } else {
+        echo json_encode(["status" => "error", "message" => "Error al actualizar: " . $conn->error]);
+    }
+} else {
+    echo json_encode(["status" => "error", "message" => "Datos incompletos."]);
+}
+
+$conn->close();
 ?>
+

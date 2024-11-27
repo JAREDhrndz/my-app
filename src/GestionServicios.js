@@ -120,8 +120,8 @@ const GestionServicios = () => {
     console.log("Datos enviados al servidor:", data);  // Verifica que el id esté presente
   
     try {
-      const response = await fetch("http://localhost/backend/updateServicio.php", {
-        method: "POST",
+      const response = await fetch(`http://localhost/backend/updateServicio.phpid=${servicioActual.Id}`, {
+        method: 'POST',
         headers: {
           "Content-Type": "application/json",
         },

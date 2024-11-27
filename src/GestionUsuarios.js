@@ -98,28 +98,28 @@ const GestionUsuarios = () => {
   const handleUpdateSubmit = async (e) => {
     e.preventDefault();
     try {
-        const datosActualizados = { ...formData };
-        if (!formData.Contraseña) {
-            delete datosActualizados.Contraseña; // Elimina la contraseña si está vacía
-        }
-
-        const response = await fetch(`http://localhost/backend/updateUsuario.php?numUsuario=${usuarioActual.Num_Usuario}`, {
-            method: 'POST', // Cambiado de PUT a POST
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(datosActualizados), // Envía los datos como JSON
-        });
-
-        if (response.ok) {
-            setUsuarios(usuarios.map((usuario) =>
-                usuario.Num_Usuario === usuarioActual.Num_Usuario ? { ...usuario, ...datosActualizados } : usuario
-            ));
-            setMostrarFormulario(false);
-            setUsuarioActual(null);
-        } else {
-            console.error('Error al actualizar el usuario');
-        }
+      const datosActualizados = { ...formData };
+      if (!formData.Contraseña) {
+        delete datosActualizados.Contraseña; // Elimina la contraseña si está vacía
+      }
+  
+      const response = await fetch(`http://localhost/backend/updateUsuario.php`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(datosActualizados),
+      });
+  
+      if (response.ok) {
+        setUsuarios(usuarios.map((usuario) =>
+          usuario.Num_Usuario === usuarioActual.Num_Usuario ? { ...usuario, ...datosActualizados } : usuario
+        ));
+        setMostrarFormulario(false);
+        setUsuarioActual(null);
+      } else {
+        console.error('Error al actualizar el usuario');
+      }
     } catch (error) {
         console.error('Error al actualizar el usuario:', error);
     }
@@ -132,8 +132,10 @@ const GestionUsuarios = () => {
   };
 
   return (
+<>
+<div className="background-container5"></div>
+    <h1 id="titulo-usuarios" className="title">USUARIOS</h1>
     <div id="gestion-usuarios" className="container">
-      <h1 id="titulo-usuarios" className="title">Gestión de Usuarios</h1>
       
       <div className="btn-container">
         {!mostrarFormulario && (
@@ -282,6 +284,7 @@ const GestionUsuarios = () => {
         </table>
       )}
     </div>
+    </>
   );
 };
 

@@ -1,15 +1,20 @@
 <?php
-include 'db.php';
+header('Content-Type: application/json');
+include 'dbConnection.php';
 
 $id = $_GET['id'];
 
 if ($id) {
     try {
-        $stmt = $pdo->prepare("DELETE FROM ventas WHERE Id = ?");
-        $stmt->execute([$id]);
-        echo json_encode(['message' => 'Venta eliminada correctamente.']);
+        $query = $conn->prepare("DELETE FROM ventas WHERE Id = :Id");
+        $query->bindParam(':Id', $id);
+        $query->execute();
+
+        echo json_encode(['status' => 'success']);
     } catch (PDOException $e) {
-        echo json_encode(['error' => $e->getMessage()]);
+        echo json_encode(['error' => 'Error al eliminar la venta: ' . $e->getMessage()]);
     }
+} else {
+    echo json_encode(['error' => 'ID no válido']);
 }
 ?>
