@@ -6,6 +6,8 @@ import './formularios.css';
 
 const GestionUsuarios = () => {
   const [usuarios, setUsuarios] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchField, setSearchField] = useState('Nombre');
   const [formData, setFormData] = useState({
     Nombre: '',
     Correo_Electronico: '',
@@ -131,10 +133,56 @@ const GestionUsuarios = () => {
     setUsuarioActual(null);
   };
 
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+  
+  const handleSearchFieldChange = (e) => {
+    setSearchField(e.target.value);
+  };
+
+  
+  const filteredUsuarios = usuarios.filter((usuario) => {
+    return usuario[searchField]
+      .toString()
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase());
+  });
+  
+
   return (
 <>
 <div className="background-container5"></div>
     <h1 id="titulo-usuarios" className="title">USUARIOS</h1>
+
+    <div className="search-container">
+        <div className="search-input-wrapper">
+            <input
+              type="text"
+              className="search-input"
+              placeholder="Buscar..."
+              value={searchQuery}
+              onChange={handleSearchChange}
+            />
+          </div>
+          <div className="search-options">
+            <span className="search-label">Buscar por:</span>
+            <select
+              className="search-select"
+              value={searchField}
+              onChange={handleSearchFieldChange}
+            >
+              <option value="Nombre">Nombre</option>
+              <option value="Correo_Electronico">Correo</option>
+              <option value="Telefono">Teléfono</option>
+              <option value="Direccion">Dirección</option>
+              <option value="Tipo_usuario">Tipo de Usuario</option>
+            </select>
+          </div>
+        </div>
+
+
     <div id="gestion-usuarios" className="container">
       
       <div className="btn-container">
@@ -254,32 +302,35 @@ const GestionUsuarios = () => {
               <th className="column-acciones">Acciones</th>
             </tr>
           </thead>
+
+          {/* Mapeo de usuarios que se muestra en la tabla */}
           <tbody>
-            {usuarios.length > 0 ? (
-              usuarios.map((usuario) => (
-                <tr key={usuario.Num_Usuario}>
-                  <td>{usuario.Num_Usuario}</td>
-                  <td>{usuario.Nombre}</td>
-                  <td>{usuario.Correo_Electronico}</td>
-                  <td>{usuario.Telefono}</td>
-                  <td>{usuario.Direccion}</td>
-                  <td>{usuario.Tipo_usuario}</td>
-                  <td>********</td>
-                  <td>
-                    <button onClick={() => handleUpdate(usuario)} className="btn-icon">
-                      <img src={editIcon} alt="Editar" />
-                    </button>
-                    <button onClick={() => handleDelete(usuario.Num_Usuario)} className="btn-icon">
-                      <img src={deleteIcon} alt="Eliminar" />
-                    </button>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr className="no-data">
-                <td colSpan="8">No hay usuarios registrados.</td>
-              </tr>
-            )}
+          {filteredUsuarios.length > 0 ? (
+  filteredUsuarios.map((usuario) => (
+    <tr key={usuario.Num_Usuario}>
+      <td>{usuario.Num_Usuario}</td>
+      <td>{usuario.Nombre}</td>
+      <td>{usuario.Correo_Electronico}</td>
+      <td>{usuario.Telefono}</td>
+      <td>{usuario.Direccion}</td>
+      <td>{usuario.Tipo_usuario}</td>
+      <td>********</td>
+      <td>
+        <button onClick={() => handleUpdate(usuario)} className="btn-icon">
+          <img src={editIcon} alt="Editar" />
+        </button>
+        <button onClick={() => handleDelete(usuario.Num_Usuario)} className="btn-icon">
+          <img src={deleteIcon} alt="Eliminar" />
+        </button>
+      </td>
+    </tr>
+  ))
+) : (
+  <tr className="no-data">
+    <td colSpan="8">No hay usuarios registrados.</td>
+  </tr>
+)}
+
           </tbody>
         </table>
       )}

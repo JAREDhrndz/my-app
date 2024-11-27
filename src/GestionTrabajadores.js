@@ -13,6 +13,8 @@ const GestionTrabajadores = () => {
         correo_electronico: ''
     });
     const [showForm, setShowForm] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [searchField, setSearchField] = useState('Nombre');
 
     const fetchTrabajadores = async () => {
         try {
@@ -88,20 +90,59 @@ const GestionTrabajadores = () => {
         }
     };
 
+    const handleSearchChange = (e) => {
+        setSearchQuery(e.target.value);
+    };
+
+    const handleFieldChange = (e) => {
+        setSearchField(e.target.value);
+    };
+
+    const filteredTrabajadores = trabajadores.filter((trabajador) => {
+        if (!searchQuery) return true;
+        return trabajador[searchField]?.toString().toLowerCase().includes(searchQuery.toLowerCase());
+    });
+
     return (
         <div className="background-container2">
             <h1 id="titulo-trabajadores" className="title">TRABAJADORES</h1>
+
+            <div className="search-container">
+                <div className="search-input-wrapper">
+                    <input
+                        type="text"
+                        className="search-input"
+                        placeholder="Buscar..."
+                        value={searchQuery}
+                        onChange={handleSearchChange}
+                    />
+                </div>
+                <div className="search-options">
+                    <span className="search-label">Buscar por:</span>
+                    <select
+                        className="search-select"
+                        value={searchField}
+                        onChange={handleFieldChange}
+                    >
+                        <option value="Nombre">Nombre</option>
+                        <option value="Cargo">Cargo</option>
+                        <option value="Telefono">Teléfono</option>
+                        <option value="Correo_Electronico">Correo Electrónico</option>
+                    </select>
+                </div>
+            </div>
+
             <div id="gestion-trabajadores" className="container">
                 {!showForm ? (
                     <>
                         <div className="btn-container"> 
-                        <button className="btn-add" onClick={() => setShowForm(true)}>
-                            <span className="icon icon-1"></span>
-                            <span className="gradient-insert"></span>
-                            <span className="gradient-insert2"></span>
-                            <span className="insert-background"></span>
-                            <span className="button-insert">Insertar Trabajador</span>
-                        </button>
+                            <button className="btn-add" onClick={() => setShowForm(true)}>
+                                <span className="icon icon-1"></span>
+                                <span className="gradient-insert"></span>
+                                <span className="gradient-insert2"></span>
+                                <span className="insert-background"></span>
+                                <span className="button-insert">Insertar Trabajador</span>
+                            </button>
                         </div>
 
                         <table className="table-general">
@@ -116,8 +157,8 @@ const GestionTrabajadores = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {Array.isArray(trabajadores) && trabajadores.length > 0 ? (
-                                    trabajadores.map((trabajador) => (
+                                {Array.isArray(filteredTrabajadores) && filteredTrabajadores.length > 0 ? (
+                                    filteredTrabajadores.map((trabajador) => (
                                         <tr key={trabajador.Numero_empleado}>
                                             <td>{trabajador.Numero_empleado}</td>
                                             <td>{trabajador.Nombre}</td>
@@ -161,7 +202,7 @@ const GestionTrabajadores = () => {
                     </>
                 ) : (
                     <div className="form-add-update">
-                        <h2 className="title">{formData.id ? 'Actualizar Trabajador' : 'Agregar Nuevo Trabajador'}</h2>
+                        <h2 className="titulo-form">{formData.id ? 'Actualizar Trabajador' : 'Agregar Nuevo Trabajador'}</h2>
                         <form onSubmit={handleSubmit}>
                             <label htmlFor="id">ID (solo para actualizar):</label>
                             <input

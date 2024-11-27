@@ -5,6 +5,8 @@ import deleteIcon from './assets/icons/delete.png';
 
 const GestionVentas = () => {
   const [ventas, setVentas] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchField, setSearchField] = useState('Descripcion');
   const [formData, setFormData] = useState({
     Descripcion: '',
     Tipo_de_Pago: 'Efectivo',
@@ -48,6 +50,21 @@ const GestionVentas = () => {
       console.error('Error al eliminar la venta:', error);
     }
   };
+
+  const handleSearchQueryChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+  
+  const handleSearchFieldChange = (e) => {
+    setSearchField(e.target.value);
+  };
+  
+  const filteredVentas = ventas.filter((venta) => {
+    return venta[searchField]
+      .toString()
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase());
+  });
 
   const handleUpdate = (venta) => {
     setVentaActual(venta);
@@ -140,8 +157,40 @@ const GestionVentas = () => {
   };
 
   return (
+<>
+  <div className="background-container3"></div>
+    <h1 id="titulo-ventas" className="title">VENTAS</h1>
+
+    <div className="search-container">
+  <div className="search-input-wrapper">
+    <input
+      type="text"
+      className="search-input"
+      placeholder="Buscar..."
+      value={searchQuery}
+      onChange={handleSearchQueryChange}
+    />
+  </div>
+  <div className="search-options">
+    <span className="search-label">Buscar por:</span>
+    <select
+      className="search-select"
+      value={searchField}
+      onChange={handleSearchFieldChange}
+    >
+      <option value="Descripcion">Descripción</option>
+      <option value="Tipo_de_Pago">Tipo de Pago</option>
+      <option value="Total_pagado">Total Pagado</option>
+      <option value="Fecha">Fecha</option>
+      <option value="Num_usuario">Número de Usuario</option>
+      <option value="Id_proveedor_servicio">ID Proveedor</option>
+      <option value="Num_empleado">Número de Empleado</option>
+    </select>
+  </div>
+</div>
+
+
     <div id="gestion-ventas" className="container">
-      <h1 id="titulo-ventas" className="title">Gestión de Ventas</h1>
 
       <div className="btn-container">
         {!mostrarFormulario && (
@@ -267,57 +316,58 @@ const GestionVentas = () => {
             <th>Acciones</th>
           </tr>
           </thead>
+
+
           <tbody>
-  {ventas.length > 0 ? (
-    ventas.map((venta) => (
-      // Verifica que `venta.Id` esté presente y sea válido
-      venta.Id ? (
-        <tr key={venta.Id}>
-          <td>{venta.Id}</td>
-          <td>{venta.Descripcion}</td>
-          <td>{venta.Tipo_de_Pago}</td>
-          <td>{venta.Total_pagado}</td>
-          <td>{venta.Fecha}</td>
-          <td>{venta.Num_usuario}</td>
-          <td>{venta.Id_proveedor_servicio}</td>
-          <td>{venta.Num_empleado}</td>
-          <td>
-            <div className="btn-actions">
-              <button
-                className="btn-icon"
-                onClick={() => handleUpdate(venta)}
-              >
-                <img
-                  className="icon-action"
-                  src={editIcon}
-                  alt="Editar"
-                />
-              </button>
-              <button
-                className="btn-icon"
-                onClick={() => handleDelete(venta.Id)}
-              >
-                <img
-                  className="icon-action"
-                  src={deleteIcon}
-                  alt="Eliminar"
-                />
-              </button>
-            </div>
-          </td>
-        </tr>
-      ) : null // Si no tiene Id, no renderiza esa fila
-    ))
-  ) : (
-    <tr>
-      <td colSpan="9">No hay ventas registradas</td>
-    </tr>
-  )}
-</tbody>
+                {filteredVentas.length > 0 ? (
+                  filteredVentas.map((venta) => (
+                    <tr key={venta.Id}>
+                      <td>{venta.Id}</td>
+                      <td>{venta.Descripcion}</td>
+                      <td>{venta.Tipo_de_Pago}</td>
+                      <td>{venta.Total_pagado}</td>
+                      <td>{venta.Fecha}</td>
+                      <td>{venta.Num_usuario}</td>
+                      <td>{venta.Id_proveedor_servicio}</td>
+                      <td>{venta.Num_empleado}</td>
+                      <td>
+                        <div className="btn-actions">
+                          <button
+                            className="btn-icon"
+                            onClick={() => handleUpdate(venta)}
+                          >
+                            <img
+                              className="icon-action"
+                              src={editIcon}
+                              alt="Editar"
+                            />
+                          </button>
+                          <button
+                            className="btn-icon"
+                            onClick={() => handleDelete(venta.Id)}
+                          >
+                            <img
+                              className="icon-action"
+                              src={deleteIcon}
+                              alt="Eliminar"
+                            />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="9">No se encontraron ventas</td>
+                  </tr>
+                )}
+          </tbody>
+
 
         </table>
       )}
     </div>
+    </>
   );
 };
 

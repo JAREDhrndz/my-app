@@ -17,14 +17,20 @@ const Section2 = () => {
                     <img src={misionImage} alt="Misión" />
                     <div className="text-overlay">
                         <h2>Misión</h2>
-                        <p>Texto con la misión de la empresa...</p>
+                        <p>"Hacer el compromiso de
+                        construir obras con la ética de una
+                        empresa confiable y responsable para
+                        la completa satisfacción de su cliente,
+                        teniendo la honestidad, calidad y
+                        lealtad como principales valores."</p>
                     </div>
                 </div>
                 <div className="image-back">
                     <img src={visionImage} alt="Visión" />
                     <div className="text-overlay">
                         <h2>Visión</h2>
-                        <p>Texto con la visión de la empresa...</p>
+                        <p>Fomentar la integracion y superacion
+                        continua de la empresa.</p>
                     </div>
                 </div>
             </div>

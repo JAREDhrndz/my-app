@@ -5,6 +5,9 @@ import deleteIcon from './assets/icons/delete.png';
 
 const GestionProveedores = () => {
     const [proveedores, setProveedores] = useState([]);
+    const [filteredProveedores, setFilteredProveedores] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [selectedField, setSelectedField] = useState('Nombre');
     const [formData, setFormData] = useState({
         id: '',
         nombre: '',
@@ -27,6 +30,7 @@ const GestionProveedores = () => {
             if (!response.ok) throw new Error('Error al obtener los proveedores');
             const data = await response.json();
             setProveedores(data);
+            setFilteredProveedores(data); // Al principio mostramos todos los proveedores
         } catch (error) {
             console.error('Error fetching proveedores:', error);
         }
@@ -35,6 +39,18 @@ const GestionProveedores = () => {
     useEffect(() => {
         fetchProveedores();
     }, []);
+
+    const handleSearch = (e) => {
+        setSearchTerm(e.target.value);
+        const filtered = proveedores.filter(proveedor =>
+            proveedor[selectedField].toString().toLowerCase().includes(e.target.value.toLowerCase())
+        );
+        setFilteredProveedores(filtered);
+    };
+
+    const handleFieldChange = (e) => {
+        setSelectedField(e.target.value);
+    };
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -93,17 +109,45 @@ const GestionProveedores = () => {
         <>
             <div className="background-container"></div>
             <h1 id="titulo-proveedores" className="title">PROVEEDORES</h1>
+
+            <div className="search-container">
+                            <div className="search-input-wrapper">
+                                <input
+                                    type="text"
+                                    placeholder="Buscar..."
+                                    value={searchTerm}
+                                    onChange={handleSearch}
+                                    className="search-input"
+                                />
+                            </div>
+                            <div className="search-options">
+                                <span className="search-label">Buscar por:</span>
+                                <select
+                                    value={selectedField}
+                                    onChange={handleFieldChange}
+                                    className="search-select"
+                                >
+                                    <option value="Nombre">Nombre</option>
+                                    <option value="Correo_Electronico">Correo Electrónico</option>
+                                    <option value="Telefono">Teléfono</option>
+                                    <option value="Detalles">Detalles</option>
+                                    <option value="N_proveedor">ID</option>
+                                </select>
+                            </div>
+                        </div>
+
+
             <div id="gestion-proveedores" className="container">
                 {!showForm ? (
                     <>
-                        <div className="btn-container">
-                            <button className="btn-add" onClick={() => setShowForm(true)}>
-                                <span className="icon icon-1"></span>
-                                <span className="gradient-insert"></span>
-                                <span className="gradient-insert2"></span>
-                                <span className="insert-background"></span>
-                                <span className="button-insert">Insertar Proveedor</span>
-                            </button>
+                        <div className="btn-container"> 
+                        <button className="btn-add" onClick={() => setShowForm(true)}>
+                            <span className="icon icon-1"></span>
+                            <span className="gradient-insert"></span>
+                            <span className="gradient-insert2"></span>
+                            <span className="insert-background"></span>
+                            <span className="button-insert">Insertar Trabajador</span>
+                        </button>
                         </div>
 
                         <table className="table-general">
@@ -118,8 +162,8 @@ const GestionProveedores = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {Array.isArray(proveedores) && proveedores.length > 0 ? (
-                                    proveedores.map((proveedor) => (
+                                {Array.isArray(filteredProveedores) && filteredProveedores.length > 0 ? (
+                                    filteredProveedores.map((proveedor) => (
                                         <tr key={proveedor.N_proveedor}>
                                             <td>{proveedor.N_proveedor}</td>
                                             <td>{proveedor.Nombre}</td>
@@ -163,7 +207,7 @@ const GestionProveedores = () => {
                     </>
                 ) : (
                     <div className="form-add-update">
-                        <h2 className="title">{formData.id ? 'Actualizar Proveedor' : 'Agregar Nuevo Proveedor'}</h2>
+                        <h2 className="titulo-form">{formData.id ? 'Actualizar Proveedor' : 'Agregar Nuevo Proveedor'}</h2>
                         <form onSubmit={handleSubmit}>
                             <label htmlFor="nombre">Nombre del proveedor:</label>
                             <input
@@ -202,13 +246,16 @@ const GestionProveedores = () => {
                                 required
                             />
                             <div className="btn-container-form">
-                                <button type="submit" className="btn-update">
+                            <button type="submit" className="btn-update">
                                     <span className="icon icon-1"></span>
                                     <span className="gradient-update"></span>
                                     <span className="gradient-update2"></span>
                                     <span className="insert-background"></span>
-                                    <span className="button-update">{formData.id ? 'Actualizar Proveedor' : 'Agregar Proveedor'}</span>
+                                    <span className="button-update">{formData.id ? 'Actualizar Proveedor' : 'Agregar Trabajador'}</span>
                                 </button>
+
+
+
                                 <button type="button" className="btn-add" onClick={() => setShowForm(false)}>
                                     <span className="icon icon-1"></span>
                                     <span className="gradient-back"></span>

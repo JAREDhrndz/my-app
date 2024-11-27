@@ -1,4 +1,8 @@
 /* src/MainPage.css */
+body{
+    overflow-x: hidden;
+}
+
 .main-page {
     height: auto;
     display: flex;
@@ -7,6 +11,7 @@
     align-items: center;
     text-align: center;
     color: rgb(0, 0, 0);
+
 }
 
 .parallax-container {

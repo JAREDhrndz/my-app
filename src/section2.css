@@ -8,8 +8,8 @@
 
 .image-container {
     position: relative;
-    width: 80%; /* Ajusta el ancho del contenedor */
-    max-width: 600px; /* Puedes ajustar el valor máximo según tus necesidades */
+    width: 90%; /* Ajusta el ancho del contenedor */
+    max-width: 80%; /* Puedes ajustar el valor máximo según tus necesidades */
     height: 300px; /* Define la altura para que sea más rectangular */
     cursor: pointer;
     perspective: 1000px; /* Para dar el efecto de rotación */
@@ -35,18 +35,19 @@
     width: 100%; /* Ocupa todo el ancho del contenedor */
     height: 100%; /* Ocupa toda la altura del contenedor */
     object-fit: cover; /* Asegura que la imagen cubra el área sin distorsión */
+    filter: brightness(0.3);
 }
 
 .image-back {
-    transform: rotateY(180deg); /* Al principio, la parte posterior está rotada */
+    transform: rotateX(180deg); /* Al principio, la parte posterior está rotada */
 }
 
 .image-container.rotated .image-front {
-    transform: rotateY(180deg); /* Cuando se rota, la parte frontal gira */
+    transform: rotateX(180deg); /* Cuando se rota, la parte frontal gira */
 }
 
 .image-container.rotated .image-back {
-    transform: rotateY(0); /* La parte posterior aparece cuando la imagen se rota */
+    transform: rotateX(0); /* La parte posterior aparece cuando la imagen se rota */
 }
 
 .text-overlay {

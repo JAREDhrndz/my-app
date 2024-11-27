@@ -38,6 +38,10 @@
     top: 60px; /* Desplazado hacia abajo para que no cubra la navbar */
     border-radius: 10px;
     overflow: hidden;
+
+    background: rgba(255, 255, 255, 0.112);;
+    backdrop-filter: blur( 7px );
+    -webkit-backdrop-filter: blur( 7px );
 }
 
 .dropdown:hover::before {
@@ -74,6 +78,7 @@
     pointer-events: none;
     border-radius: 50%;
     opacity: 0.8;
+    z-index: -3;
     /* Quitamos la transición para que el efecto siga el cursor sin delay */
 }
 
