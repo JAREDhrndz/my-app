@@ -1,40 +1,59 @@
 <?php
-header('Content-Type: application/json');
-include 'db.php'; // Archivo para la conexión a la base de datos
-
-// Leer datos JSON enviados desde el frontend
+// Obtener el cuerpo de la solicitud (JSON)
 $data = json_decode(file_get_contents('php://input'), true);
 
-// Validar que los datos requeridos están presentes
-if (!isset($data['correo']) || !isset($data['contraseña'])) {
-    echo json_encode(['status' => 'error', 'mensaje' => 'Datos incompletos']);
-    exit();
-}
+// Verifica si los datos están siendo recibidos correctamente
+if (isset($data['correo_electronico']) && isset($data['contraseña'])) {
+    $correo = $data['correo_electronico'];
+    $contraseña = $data['contraseña'];
 
-$correo = $data['correo'];
-$contraseña = $data['contraseña'];
+    $host = 'localhost'; 
+    $user = 'root'; 
+    $password = ''; 
+    $dbname = 'canesa'; 
 
-// Verificar usuario en la base de datos
-$sql = "SELECT contraseña FROM usuarios WHERE correo = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("s", $correo);
-$stmt->execute();
-$stmt->store_result();
+    // Crear conexión
+    $conn = new mysqli($host, $user, $password, $dbname);
 
-if ($stmt->num_rows > 0) {
-    $stmt->bind_result($hash);
-    $stmt->fetch();
-
-    // Verificar contraseña
-    if (password_verify($contraseña, $hash)) {
-        echo json_encode(['status' => 'success', 'mensaje' => 'Inicio de sesión exitoso']);
-    } else {
-        echo json_encode(['status' => 'error', 'mensaje' => 'Contraseña incorrecta']);
+    // Verificar conexión
+    if ($conn->connect_error) {
+        die("Conexión fallida: " . $conn->connect_error);
     }
-} else {
-    echo json_encode(['status' => 'error', 'mensaje' => 'Correo no registrado']);
-}
 
-$stmt->close();
-$conn->close();
+    // Consulta SQL para obtener el tipo de usuario
+    $sql = "SELECT Tipo_usuario FROM usuarios WHERE Correo_Electronico = ? AND Contraseña = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('ss', $correo, $contraseña);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    // Verifica si se encontró el usuario
+    if ($result->num_rows > 0) {
+        // Obtener el tipo de usuario
+        $row = $result->fetch_assoc();
+        $tipo_usuario = $row['Tipo_usuario'];
+
+        // Respuesta de éxito con tipo de usuario
+        echo json_encode([
+            "status" => "success",
+            "mensaje" => "Login exitoso",
+            "tipo_usuario" => $tipo_usuario  // Incluir el tipo de usuario
+        ]);
+    } else {
+        // Si no se encuentra el usuario, devolver un error
+        echo json_encode([
+            "status" => "error",
+            "mensaje" => "Correo o contraseña incorrectos"
+        ]);
+    }
+
+    // Cerrar conexión
+    $conn->close();
+} else {
+    // Si faltan los parámetros, devuelves un mensaje de error
+    echo json_encode([
+        "status" => "error",
+        "mensaje" => "Faltan parámetros de correo o contraseña"
+    ]);
+}
 ?>

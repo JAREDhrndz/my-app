@@ -4,9 +4,14 @@ body.gestion-proveedores {
     padding: 0;
 }
 
+body.gestion-trabajadores {
+    margin: 0;
+    padding: 0;
+}
 
 
-.background-container {
+
+.background-container1 {
     position: fixed;
     top: 0;
     left: 0;
@@ -31,6 +36,7 @@ body.gestion-proveedores {
     background-position: center;
     background-attachment: fixed;
     z-index: -1;
+    overflow-y: auto;
 }
 
 .background-container3 {
@@ -72,7 +78,7 @@ body.gestion-proveedores {
     z-index: -1;
 }
 
-.background-container::before {
+.background-container1::before {
     content: "";
     position: absolute;
     top: 0;
@@ -135,6 +141,10 @@ body.gestion-proveedores {
     z-index: 2;
 }
 
+#gestion-trabajadores .container {
+    position: relative;
+    z-index: 2;
+}
 
 /*TITULOS*/
 #titulo-proveedores {
@@ -381,7 +391,7 @@ body.gestion-proveedores {
     left: -2px;
     right: -2px;
     bottom: -2px;
-    background-image: linear-gradient(to right top, #d1b36b, #c5a463, #b9965c, #ad8855, #a07a4e, #9d784f, #997750, #967551, #9c7e5b, #a28865, #a9916f, #af9b7a);
+    background-image: linear-gradient(to right top, #0eb200, #24c003, #34ce05, #43dd08, #51eb0a, #50ea0b, #4fe90d, #4ee80e, #3ed70e, #2ec70e, #1cb60c, #00a60a);
     z-index: -1;
     border-radius: 10px;
     text-decoration: none;
@@ -412,7 +422,7 @@ body.gestion-proveedores {
 }
 
 .btn-add:hover .button-insert {
-    color: #cb9662;
+    color: #8DFF0C;
 }
 
 .btn-add:active {
@@ -688,4 +698,37 @@ body.gestion-proveedores {
 .titulo-form{
     size: 50px;
     color: #b48250;
+}
+
+#input-tipo-usuario {
+    width: 100%; /* Asegura que el select ocupe el 100% del contenedor */
+    padding: 8px;
+    border: 1px solid #898989;
+    border-radius: 4px;
+    background-color: #43434326;
+    color: rgba(255, 255, 255, 0.375);
+    margin-bottom: 10px; /* Espaciado entre los campos */
+    box-sizing: border-box; /* Asegura que el padding no afecte al ancho total */
+}
+
+#input-tipo-usuario option {
+    background-color: #000000eb;
+    color: rgba(255, 255, 255, 0.748);
+}
+
+
+#Tipo_de_Pago {
+    width: 100%; /* Asegura que el select ocupe el 100% del contenedor */
+    padding: 8px;
+    border: 1px solid #898989;
+    border-radius: 4px;
+    background-color: #43434326;
+    color: rgba(255, 255, 255, 0.375);
+    margin-bottom: 10px; /* Espaciado entre los campos */
+    box-sizing: border-box; /* Asegura que el padding no afecte al ancho total */
+}
+
+#Tipo_de_Pago option {
+    background-color: #000000eb;
+    color: rgba(255, 255, 255, 0.748);
 }

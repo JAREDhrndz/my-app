@@ -342,16 +342,23 @@ const GestionVentas = () => {
                               alt="Editar"
                             />
                           </button>
+
                           <button
-                            className="btn-icon"
-                            onClick={() => handleDelete(venta.Id)}
-                          >
-                            <img
-                              className="icon-action"
-                              src={deleteIcon}
-                              alt="Eliminar"
-                            />
-                          </button>
+                                className="btn-icon"
+                                onClick={() => {
+                                    const confirmDelete = window.confirm("¿Estás seguro que quieres eliminar este registro?");
+                                    if (confirmDelete) {
+                                        handleDelete(venta.Id);
+                                    }
+                                }}
+                            >
+                                <img
+                                    className="icon-action"
+                                    src={deleteIcon}
+                                    alt="Eliminar"
+                                />
+                            </button>
+                            
                         </div>
                       </td>
                     </tr>

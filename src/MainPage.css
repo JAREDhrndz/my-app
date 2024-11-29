@@ -1,6 +1,7 @@
 /* src/MainPage.css */
 body{
     overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .main-page {

@@ -36,6 +36,7 @@ function App() {
                         </>
                     } 
                 />
+                <Route path="/Mainpage" element={<Mainpage />} />
                 <Route path="/login" element={<Login />} />
 
                 <Route path="/GestionTrabajadores" element={<GestionTrabajadores />} />

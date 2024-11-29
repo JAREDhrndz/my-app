@@ -13,6 +13,14 @@ const GestionTrabajadores = () => {
         correo_electronico: ''
     });
     const [showForm, setShowForm] = useState(false);
+
+    useEffect(() => {
+        document.body.classList.add('gestion-trabajadores');
+        return () => {
+            document.body.classList.remove('gestion-trabajadores');
+        };
+    }, []);
+
     const [searchQuery, setSearchQuery] = useState('');
     const [searchField, setSearchField] = useState('Nombre');
 
@@ -104,7 +112,8 @@ const GestionTrabajadores = () => {
     });
 
     return (
-        <div className="background-container2">
+        <>
+            <div className="background-container2"></div>
             <h1 id="titulo-trabajadores" className="title">TRABAJADORES</h1>
 
             <div className="search-container">
@@ -182,12 +191,18 @@ const GestionTrabajadores = () => {
                                                     >
                                                         <img src={editIcon} alt="Editar" />
                                                     </button>
+
                                                     <button
-                                                        className="btn-icon"
-                                                        onClick={() => handleDelete(trabajador.Numero_empleado)}
+                                                            className="btn-icon"
+                                                            onClick={() => {
+                                                                const confirmDelete = window.confirm("¿Estás seguro que quieres eliminar este registro?");
+                                                                if (confirmDelete) {
+                                                                    handleDelete(trabajador.Numero_empleado);
+                                                                }
+                                                            }}
                                                     >
-                                                        <img src={deleteIcon} alt="Eliminar" />
-                                                    </button>
+                                                            <img src={deleteIcon} alt="Eliminar" />
+                                                        </button>
                                                 </div>
                                             </td>
                                         </tr>
@@ -274,7 +289,8 @@ const GestionTrabajadores = () => {
                     </div>
                 )}
             </div>
-        </div>
+
+        </>
     );
 };
 

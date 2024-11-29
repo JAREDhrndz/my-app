@@ -253,90 +253,101 @@ const GestionUsuarios = () => {
               <option value="SuperAdministrador">SuperAdministrador</option>
             </select>
 
-            {!usuarioActual && (
-              <>
-                <label htmlFor="input-contraseña">Contraseña:</label>
-                <input
-                  id="input-contraseña"
-                  type="password"
-                  name="Contraseña"
-                  value={formData.Contraseña}
-                  onChange={handleChange}
-                  required
-                />
-              </>
-            )}
+                    {!usuarioActual && (
+                      <>
+                        <label htmlFor="input-contraseña">Contraseña:</label>
+                        <input
+                          id="input-contraseña"
+                          type="password"
+                          name="Contraseña"
+                          value={formData.Contraseña}
+                          onChange={handleChange}
+                          required
+                        />
+                      </>
+                    )}
 
-            <div className="btn-container-form">
-              <button type="submit" className="btn-update">
-                <span className="icon icon-1"></span>
-                <span className="gradient-update"></span>
-                <span className="gradient-update2"></span>
-                <span className="insert-background"></span>
-                <span className="button-update">{usuarioActual ? 'Actualizar Usuario' : 'Agregar Usuario'}</span>
-              </button>
+                    <div className="btn-container-form">
+                      <button type="submit" className="btn-update">
+                        <span className="icon icon-1"></span>
+                        <span className="gradient-update"></span>
+                        <span className="gradient-update2"></span>
+                        <span className="insert-background"></span>
+                        <span className="button-update">{usuarioActual ? 'Actualizar Usuario' : 'Agregar Usuario'}</span>
+                      </button>
 
-              <button type="button" className="btn-add" onClick={toggleFormulario}>
-                <span className="icon icon-1"></span>
-                <span className="gradient-back"></span>
-                <span className="gradient-back2"></span>
-                <span className="insert-background"></span>
-                <span className="button-back">Regresar a la lista</span>
-              </button>
-            </div>
-          </form>
-        </div>
-      )}
+                      <button type="button" className="btn-add" onClick={toggleFormulario}>
+                        <span className="icon icon-1"></span>
+                        <span className="gradient-back"></span>
+                        <span className="gradient-back2"></span>
+                        <span className="insert-background"></span>
+                        <span className="button-back">Regresar a la lista</span>
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              )}
 
-      {!mostrarFormulario && (
-        <table className="table-general">
-          <thead>
-            <tr>
-              <th className="column-id">ID</th>
-              <th className="column-nombre">Nombre</th>
-              <th className="column-correo">Correo</th>
-              <th className="column-telefono">Teléfono</th>
-              <th className="column-direccion">Dirección</th>
-              <th className="column-tipo-usuario">Tipo de Usuario</th>
-              <th className="column-contraseña">Contraseña</th>
-              <th className="column-acciones">Acciones</th>
+              {!mostrarFormulario && (
+                <table className="table-general">
+                  <thead>
+                    <tr>
+                      <th className="column-id">ID</th>
+                      <th className="column-nombre">Nombre</th>
+                      <th className="column-correo">Correo</th>
+                      <th className="column-telefono">Teléfono</th>
+                      <th className="column-direccion">Dirección</th>
+                      <th className="column-tipo-usuario">Tipo de Usuario</th>
+                      <th className="column-contraseña">Contraseña</th>
+                      <th className="column-acciones">Acciones</th>
+                    </tr>
+                  </thead>
+
+                  {/* Mapeo de usuarios que se muestra en la tabla */}
+                  <tbody>
+                  {filteredUsuarios.length > 0 ? (
+          filteredUsuarios.map((usuario) => (
+            <tr key={usuario.Num_Usuario}>
+              <td>{usuario.Num_Usuario}</td>
+              <td>{usuario.Nombre}</td>
+              <td>{usuario.Correo_Electronico}</td>
+              <td>{usuario.Telefono}</td>
+              <td>{usuario.Direccion}</td>
+              <td>{usuario.Tipo_usuario}</td>
+              <td>********</td>
+              <td>
+
+                <button onClick={() => handleUpdate(usuario)} className="btn-icon">
+                  <img src={editIcon} alt="Editar" />
+                </button>
+
+                <button
+                    onClick={() => {
+                        const confirmDelete = window.confirm("¿Estás seguro que quieres eliminar este registro?");
+                        if (confirmDelete) {
+                            handleDelete(usuario.Num_Usuario);
+                        }
+                    }}
+                    className="btn-icon"
+                >
+                    <img src={deleteIcon} alt="Eliminar" />
+                </button>
+
+              </td>
             </tr>
-          </thead>
+          ))
+        ) : (
+          <tr className="no-data">
+            <td colSpan="8">No hay usuarios registrados.</td>
+          </tr>
+        )}
 
-          {/* Mapeo de usuarios que se muestra en la tabla */}
-          <tbody>
-          {filteredUsuarios.length > 0 ? (
-  filteredUsuarios.map((usuario) => (
-    <tr key={usuario.Num_Usuario}>
-      <td>{usuario.Num_Usuario}</td>
-      <td>{usuario.Nombre}</td>
-      <td>{usuario.Correo_Electronico}</td>
-      <td>{usuario.Telefono}</td>
-      <td>{usuario.Direccion}</td>
-      <td>{usuario.Tipo_usuario}</td>
-      <td>********</td>
-      <td>
-        <button onClick={() => handleUpdate(usuario)} className="btn-icon">
-          <img src={editIcon} alt="Editar" />
-        </button>
-        <button onClick={() => handleDelete(usuario.Num_Usuario)} className="btn-icon">
-          <img src={deleteIcon} alt="Eliminar" />
-        </button>
-      </td>
-    </tr>
-  ))
-) : (
-  <tr className="no-data">
-    <td colSpan="8">No hay usuarios registrados.</td>
-  </tr>
-)}
+                  </tbody>
+                </table>
+              )}
+            </div>
+            </>
+          );
+        };
 
-          </tbody>
-        </table>
-      )}
-    </div>
-    </>
-  );
-};
-
-export default GestionUsuarios;
+        export default GestionUsuarios;

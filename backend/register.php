@@ -1,47 +1,31 @@
 <?php
-header('Content-Type: application/json');
-include 'db.php'; // Archivo para la conexión a la base de datos
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "canesa";
 
-// Leer datos JSON enviados desde el frontend
-$data = json_decode(file_get_contents('php://input'), true);
-
-// Validar que los datos requeridos están presentes
-if (!isset($data['nombre']) || !isset($data['correo']) || !isset($data['contraseña']) || !isset($data['telefono'])) {
-    echo json_encode(['status' => 'error', 'mensaje' => 'Datos incompletos']);
-    exit();
-}
+$data = json_decode(file_get_contents("php://input"), true);
 
 $nombre = $data['nombre'];
 $correo = $data['correo'];
-$contraseña = password_hash($data['contraseña'], PASSWORD_DEFAULT); // Encriptar contraseña
+$contraseña = password_hash($data['contraseña'], PASSWORD_DEFAULT); // Encriptación de la contraseña
 $telefono = $data['telefono'];
+$direccion = $data['direccion'];
 
-// Verificar si el correo ya está registrado
-$sql = "SELECT id FROM usuarios WHERE correo = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("s", $correo);
-$stmt->execute();
-$stmt->store_result();
+// Validar los datos, y realizar el registro en la base de datos
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-if ($stmt->num_rows > 0) {
-    echo json_encode(['status' => 'error', 'mensaje' => 'El correo ya está registrado']);
-    $stmt->close();
-    $conn->close();
-    exit();
+if ($conn->connect_error) {
+    die("Conexión fallida: " . $conn->connect_error);
 }
 
-// Insertar nuevo usuario
-$stmt->close();
-$sql = "INSERT INTO usuarios (nombre, correo, contraseña, telefono) VALUES (?, ?, ?, ?)";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("ssss", $nombre, $correo, $contraseña, $telefono);
+$sql = "INSERT INTO usuarios (nombre, correo_electronico, contraseña, telefono, direccion) VALUES ('$nombre', '$correo', '$contraseña', '$telefono', '$direccion')";
 
-if ($stmt->execute()) {
-    echo json_encode(['status' => 'success', 'mensaje' => 'Registro exitoso']);
+if ($conn->query($sql) === TRUE) {
+    echo json_encode(["status" => "success", "mensaje" => "Usuario registrado correctamente"]);
 } else {
-    echo json_encode(['status' => 'error', 'mensaje' => 'Error al registrar']);
+    echo json_encode(["status" => "error", "mensaje" => "Error al registrar el usuario: " . $conn->error]);
 }
 
-$stmt->close();
 $conn->close();
 ?>

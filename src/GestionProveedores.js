@@ -107,7 +107,7 @@ const GestionProveedores = () => {
 
     return (
         <>
-            <div className="background-container"></div>
+            <div className="background-container1"></div>
             <h1 id="titulo-proveedores" className="title">PROVEEDORES</h1>
 
             <div className="search-container">
@@ -185,14 +185,20 @@ const GestionProveedores = () => {
                                                             setShowForm(true);
                                                         }}
                                                     >
-                                                        <img src={editIcon} alt="Editar" />
-                                                    </button>
-                                                    <button
-                                                        className="btn-icon"
-                                                        onClick={() => handleDelete(proveedor.N_proveedor)}
-                                                    >
-                                                        <img src={deleteIcon} alt="Eliminar" />
-                                                    </button>
+                                        <img src={editIcon} alt="Editar" />
+                                        </button><button
+                                        className="btn-icon"
+                                        onClick={() => {
+                                            if (window.confirm("¿Estás seguro que quieres eliminar este registro?")) {
+                                                handleDelete(proveedor.N_proveedor);
+                                            }
+                                        }}
+                                    >
+                                        <img src={deleteIcon} alt="Eliminar" />
+                                    </button>
+
+
+
                                                 </div>
                                             </td>
                                         </tr>
@@ -246,14 +252,15 @@ const GestionProveedores = () => {
                                 required
                             />
                             <div className="btn-container-form">
-                            <button type="submit" className="btn-update">
-                                    <span className="icon icon-1"></span>
-                                    <span className="gradient-update"></span>
-                                    <span className="gradient-update2"></span>
-                                    <span className="insert-background"></span>
-                                    <span className="button-update">{formData.id ? 'Actualizar Proveedor' : 'Agregar Trabajador'}</span>
+                            <form onSubmit={handleSubmit}>
+                                <button type="submit" className="btn-update">
+                                        <span className="icon icon-1"></span>
+                                        <span className="gradient-update"></span>
+                                        <span className="gradient-update2"></span>
+                                        <span className="insert-background"></span>
+                                        <span className="button-update">{formData.id ? 'Actualizar Proveedor' : 'Agregar Proveedor'}</span>
                                 </button>
-
+                            </form>
 
 
                                 <button type="button" className="btn-add" onClick={() => setShowForm(false)}>

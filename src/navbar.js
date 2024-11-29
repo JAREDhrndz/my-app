@@ -46,8 +46,6 @@ const Navbar = () => {
                     <Link to="/services">Proyectos</Link>
                     <Link to="/citas">Citas</Link>
                     <Link to="/login">Login</Link>
-                    <Link to="/menu">Menú</Link>
-                    <Link to="/MenuNuevo">Menú Secundario</Link>
                 </div>
             )}
         </nav>

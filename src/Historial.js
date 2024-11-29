@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './Historial.css';
 
 const HistoricoMenu = () => {
   const [data, setData] = useState({

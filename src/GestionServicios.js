@@ -273,12 +273,20 @@ const GestionServicios = () => {
                         >
                           <img src={editIcon} alt="Editar" />
                         </button>
+
                         <button
-                          className="btn-icon"
-                          onClick={() => handleDelete(servicio.Id)}
+                            className="btn-icon"
+                            onClick={() => {
+                                const confirmDelete = window.confirm("¿Estás seguro que quieres eliminar este registro?");
+                                if (confirmDelete) {
+                                    handleDelete(servicio.Id);
+                                }
+                            }}
                         >
-                          <img src={deleteIcon} alt="Eliminar" />
+                            <img src={deleteIcon} alt="Eliminar" />
                         </button>
+
+
                       </div>
                     </td>
                   </tr>
