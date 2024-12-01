@@ -6,31 +6,65 @@ const Citas = () => {
   const [telefono, setTelefono] = useState('');
   const [descripcion, setDescripcion] = useState('');
   const [servicio, setServicio] = useState('');
+  const [fecha, setFecha] = useState('');
   const [servicios, setServicios] = useState([]);
+  const [usuarioId, setUsuarioId] = useState(null);
+  const [cargando, setCargando] = useState(true); // Estado para indicar si estamos verificando la sesión
 
-  // Simula la carga de servicios desde la base de datos
+  // Llamar a la API para obtener los servicios desde el backend
   useEffect(() => {
     const cargarServicios = async () => {
-      // Sustituye este array con tu llamada a la base de datos para cargar los servicios
-      const serviciosSimulados = [
-        { id: 1, nombre: 'Ejemplo1' },
-        { id: 2, nombre: 'Ejemplo2' },
-        { id: 3, nombre: 'Ejemplo3' },
-        { id: 4, nombre: 'Ejemplo4' },
-      ];
-      setServicios(serviciosSimulados);
+      try {
+        const response = await fetch('http://localhost/backend/getServicios.php');
+        if (!response.ok) {
+          throw new Error('Error al obtener los servicios');
+        }
+
+        const data = await response.json();
+        setServicios(data);
+      } catch (error) {
+        console.error('Error cargando los servicios:', error);
+      }
     };
 
     cargarServicios();
+
+    // Verificar si el usuario está logeado con los datos de sessionStorage
+    const obtenerUsuario = () => {
+      const user = sessionStorage.getItem('userID');
+      if (user) {
+        setUsuarioId(user); // Usuario logeado, establecer ID
+        setCargando(false);
+      } else {
+        setCargando(false);  // Si no está logeado, detener carga
+      }
+    };
+
+    obtenerUsuario();
   }, []);
 
   const manejarEnvio = async (e) => {
     e.preventDefault();
 
-    const nuevaCita = { nombre, telefono, descripcion, servicio };
+    if (!usuarioId) {
+      alert('Debes iniciar sesión para registrar una cita.');
+      return;
+    }
+
+    const nuevaCita = {
+      nombre,
+      telefono,
+      descripcion,
+      servicio,
+      fecha,
+      estado: 'Pendiente',  // Estado por defecto
+      num_usuario: usuarioId,
+    };
+
+    console.log('Datos que se enviarán al backend:', nuevaCita);
 
     // Enviar los datos al backend (PHP)
-    const response = await fetch('addCita.php', {
+    const response = await fetch('http://localhost/backend/addCitas.php', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -40,7 +74,23 @@ const Citas = () => {
 
     const data = await response.text();
     console.log('Respuesta del servidor:', data);
+
+    // Limpiar los campos después de registrar la cita
+    if (data === 'Cita registrada exitosamente') {
+      setNombre('');
+      setTelefono('');
+      setDescripcion('');
+      setServicio('');
+      setFecha('');
+      alert('¡Cita registrada exitosamente!');
+    } else {
+      alert('Hubo un error al registrar la cita.');
+    }
   };
+
+  if (cargando) {
+    return <div>Loading...</div>;  // Mostrar "Loading..." mientras se verifica la sesión
+  }
 
   return (
     <div id="citas-container">
@@ -75,6 +125,16 @@ const Citas = () => {
             required
           />
         </div>
+        <div id="citas-fecha-container">
+          <label id="citas-fecha-label" htmlFor="citas-fecha-input">Fecha y Hora:</label>
+          <input
+            id="citas-fecha-input"
+            type="datetime-local"
+            value={fecha}
+            onChange={(e) => setFecha(e.target.value)}
+            required
+          />
+        </div>
         <div id="citas-servicio-container">
           <label id="citas-servicio-label" htmlFor="citas-servicio-select">Servicio:</label>
           <select
@@ -85,8 +145,8 @@ const Citas = () => {
           >
             <option value="">Seleccione un servicio</option>
             {servicios.map((serv) => (
-              <option key={serv.id} value={serv.id}>
-                {serv.nombre}
+              <option key={serv.Id} value={serv.Id}>
+                {serv.Nombre}
               </option>
             ))}
           </select>

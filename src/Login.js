@@ -22,64 +22,76 @@ const Login = () => {
     const navigate = useNavigate(); // Instancia para redirección con useNavigate
 
     const handleSubmitLogin = async (e) => {
-        e.preventDefault();
-        const data = { correo_electronico: correo, contraseña };
-        console.log('Datos enviados al backend:', data);
+    e.preventDefault();
+    const data = { correo_electronico: correo, contraseña };
+    console.log('Datos enviados al backend:', data);
+
+    try {
+        const response = await fetch('http://localhost/backend/submit.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data),
+        });
+
+        if (!response.ok) {
+            throw new Error('Error en la solicitud');
+        }
+
+        const textResponse = await response.text();
+        console.log('Respuesta del backend:', textResponse);
 
         try {
-            const response = await fetch('http://localhost/backend/submit.php', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data),
-            });
+            const result = JSON.parse(textResponse);
+            console.log('Resultado JSON:', result);
 
-            if (!response.ok) {
-                throw new Error('Error en la solicitud');
-            }
+            setMensaje(result.mensaje);
 
-            const textResponse = await response.text();
-            console.log('Respuesta del backend:', textResponse);
+            if (result.status === 'success') {
+                const usuarioResponse = await fetch(`http://localhost/backend/getUsuarioLogeado.php?correo=${correo}`);
 
-            try {
-                // Intentamos parsear la respuesta como JSON
-                const result = JSON.parse(textResponse);
-                console.log('Resultado JSON:', result);
-
-                setMensaje(result.mensaje); // Mostrar el mensaje recibido del backend
-
-                if (result.status === 'success') {
-                    // Verificamos si "status" es 'success' y procedemos con la validación del tipo de usuario
-                    if (result.tipo_usuario) {
-                        console.log('Tipo de usuario:', result.tipo_usuario);
-                        if (result.tipo_usuario === 'Cliente') {
-                            console.log('Redirigiendo a la página del Cliente...');
-                            navigate('/Mainpage'); // Redirigir a la página del Cliente
-                            alert('¡Inicio de sesión exitoso!');
-                        } else if (result.tipo_usuario === 'Administrador') {
-                            console.log('Redirigiendo a la página del Administrador...');
-                            navigate('/menuNuevo'); // Redirigir a la página del Administrador
-                            alert('¡Inicio de sesión exitoso como Administrador!');
-                        } else if (result.tipo_usuario === 'SuperAdministrador') {
-                            console.log('Redirigiendo a la página del SuperAdministrador...');
-                            navigate('/menu'); // Redirigir a la página del SuperAdministrador
-                            alert('¡Inicio de sesión exitoso como SuperAdministrador!');
-                        }
+                if (usuarioResponse.ok) {
+                    const usuarioData = await usuarioResponse.json();
+                    if (usuarioData.Num_Usuario) {
+                        console.log('ID del usuario:', usuarioData.Num_Usuario);
+                        sessionStorage.setItem('userID', usuarioData.Num_Usuario);
+                        // Guardar el nombre del usuario también
+                        sessionStorage.setItem('userName', usuarioData.Nombre);
                     } else {
-                        console.error('El tipo de usuario no está presente en la respuesta');
+                        console.error('No se pudo obtener el ID del usuario');
                     }
                 } else {
-                    console.error('La respuesta no es exitosa:', result.mensaje);
-                    setMensaje(result.mensaje);
+                    console.error('Error al obtener el ID del usuario');
                 }
-            } catch (error) {
-                console.error('Error al parsear JSON:', error);
-                setMensaje('Hubo un error al procesar la respuesta del servidor.');
+
+                sessionStorage.setItem("sessionData", JSON.stringify(result));
+
+                if (result.tipo_usuario) {
+                    if (result.tipo_usuario === 'Cliente') {
+                        navigate('/Mainpage');
+                        alert('¡Inicio de sesión exitoso!');
+                    } else if (result.tipo_usuario === 'Administrador') {
+                        navigate('/menuNuevo');
+                        alert('¡Inicio de sesión exitoso como Administrador!');
+                    } else if (result.tipo_usuario === 'SuperAdministrador') {
+                        navigate('/menu');
+                        alert('¡Inicio de sesión exitoso como SuperAdministrador!');
+                    }
+                }
+            } else {
+                setMensaje(result.mensaje);
             }
         } catch (error) {
-            console.error('Error en la solicitud de login:', error);
-            setMensaje('Hubo un error en la solicitud');
+            console.error('Error al parsear JSON:', error);
+            setMensaje('Hubo un error al procesar la respuesta del servidor.');
         }
-    };
+    } catch (error) {
+        console.error('Error en la solicitud de login:', error);
+        setMensaje('Hubo un error en la solicitud');
+    }
+};
+
+    
+    
 
     const handleSubmitRegister = async (e) => {
         e.preventDefault();
@@ -162,8 +174,8 @@ const Login = () => {
                                     onChange={(e) => setContraseña(e.target.value)}
                                     required
                                 />
-                                <button type="button" onClick={togglePasswordVisibility}>
-                                    {mostrarContraseña ? 'Ocultar' : 'Mostrar'}
+                                <button type="button" onClick={togglePasswordVisibility} className="eye-icon">
+                                    {mostrarContraseña ? '' : ''}
                                 </button>
                             </div>
                         </div>
@@ -217,8 +229,8 @@ const Login = () => {
                                     onChange={(e) => setContraseñaRegistro(e.target.value)}
                                     required
                                 />
-                                <button type="button" onClick={togglePasswordVisibilityRegistro}>
-                                    {mostrarContraseñaRegistro ? 'Ocultar' : 'Mostrar'}
+                                <button type="button" onClick={togglePasswordVisibilityRegistro} className="eye-icon">
+                                    {mostrarContraseñaRegistro ? '' : ''}
                                 </button>
                             </div>
                         </div>
@@ -232,8 +244,8 @@ const Login = () => {
                                     onChange={(e) => setConfirmarContraseña(e.target.value)}
                                     required
                                 />
-                                <button type="button" onClick={toggleConfirmarPasswordVisibility}>
-                                    {mostrarConfirmarContraseña ? 'Ocultar' : 'Mostrar'}
+                                <button type="button" onClick={toggleConfirmarPasswordVisibility} className="eye-icon">
+                                    {mostrarConfirmarContraseña ? '' : ''}
                                 </button>
                             </div>
                         </div>
@@ -252,4 +264,3 @@ const Login = () => {
 };
 
 export default Login;
-

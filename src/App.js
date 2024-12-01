@@ -17,11 +17,14 @@ import './App.css';
 import Section1 from './section1';
 import Section2 from './section2';
 import Section3 from './section3';
+import Servicios from './servicios';
 
 import Menu from './menu';
 import MenuNew from './MenuNuevo';
 import Citas from './citas';
 import Historial from './Historial';
+
+import Footer from './Footer';
 
 function App() {
     return (
@@ -35,7 +38,9 @@ function App() {
                             <Mainpage />
                             <Section1 />
                             <Section2 />
+                            <Servicios />
                             <Section3 />
+                            <Footer />
                         </>
                     } 
                 />

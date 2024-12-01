@@ -1,8 +1,4 @@
 /* Estilos para el contenedor de login */
-body{
-    background-color: black;
-}
-
 .login-wrapper {
     position: relative;
     width: 100%;
@@ -10,7 +6,23 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: #000000;
 }
+
+.login-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('./assets/shape1.png');
+    background-position: center center;
+    background-size: 40%;
+    background-repeat: no-repeat;
+    opacity: 0.8; 
+}
+
 
 #login-container {
     display: flex;
@@ -22,7 +34,6 @@ body{
     border: 1px solid rgba(140, 140, 140, 0.5);
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    background-color: #f9f9f90f;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -31,7 +42,14 @@ body{
     transition: border 0.2s ease;
     height: auto;
     max-height: 90vh;
+    z-index: 3;
+
+
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur( 6px );
+    -webkit-backdrop-filter: blur( 7.5px );
 }
+
 
 h2 {
     text-align: center;
@@ -80,7 +98,7 @@ button:hover {
 /* Efecto de resplandor en el contorno */
 #login-container:hover {
     border: 2px solid rgba(180, 130, 80, 0.5);
-    box-shadow: 0 0 10px rgba(180, 130, 80, 0.6), 0 0 20px rgba(180, 130, 80, 0.4);
+    box-shadow: 0 0 100px rgba(180, 130, 80, 0.6), 0 0 20px rgba(180, 130, 80, 0.4);
 }
 
 #registrarse, #iniciar-sesion {
@@ -101,3 +119,17 @@ button:hover {
     text-align: center;
 }
 
+
+
+.eye-icon {
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    width: 20px;
+    height: 20px;
+    background-image: url('./assets/eye.png');
+    background-size: cover;
+    background-position: center;
+}

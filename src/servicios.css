@@ -1,0 +1,96 @@
+.servicios-section {
+  padding: 40px 20px;
+  background-image: url('./assets/fondo_servicios2.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 30%;
+  background-color: black;
+}
+
+.servicios-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 cuadros en una fila */
+  gap: 20px;
+  padding: 20px;
+}
+
+.servicio-cuadro {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(13px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 209, 145, 0.18);
+  color: #f1f1f1;
+  padding: 20px;
+  text-align: left; /* Para alinear los textos a la izquierda */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  height: auto;
+  width: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.servicio-header {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.servicio-cuadro h3 {
+  font-size: 18px;
+  margin: 0;
+  font-weight: bold;
+}
+
+.subtitulo {
+  font-size: 14px;
+  color: #ccc;
+  margin-top: 5px;
+}
+
+.descripcion {
+  font-size: 12px;
+  margin: 15px 0;
+  flex-grow: 1; /* Permite que la descripción ocupe el espacio disponible */
+}
+
+.btn-contratar {
+  background-color: #ebb178;
+  color: rgb(0, 0, 0);
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 4px;
+  align-self: flex-end; /* Alinea el botón a la derecha */
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
+  font-weight: bold;
+}
+
+.btn-contratar:hover {
+  background-color: #b48251;
+}
+
+/* Media query para pantallas medianas (tabletas) */
+@media (max-width: 1024px) {
+  .servicios-container {
+    grid-template-columns: repeat(2, 1fr); /* 2 cuadros por fila */
+  }
+
+  .servicio-cuadro {
+    height: 250px;
+  }
+}
+
+/* Media query para pantallas pequeñas (móviles) */
+@media (max-width: 600px) {
+  .servicios-container {
+    grid-template-columns: 1fr; /* 1 cuadro por fila */
+  }
+
+  .servicio-cuadro {
+    height: 200px;
+  }
+}
