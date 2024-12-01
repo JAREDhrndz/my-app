@@ -15,11 +15,12 @@ const MainPage = () => {
             const scrolled = window.scrollY; 
             const layer2 = document.querySelector('.layer2');
 
-            layer2.style.transform = `translateY(${scrolled * 0.5}px)`;
-            const blurValue = Math.min(scrolled * 0.1, 5);
-            layer2.style.filter = `blur(${blurValue}px)`;
+            // Actualiza la capa 2 al instante sin suavización
+            layer2.style.transform = `translateY(${scrolled * 0.5}px)`; // Movimiento inmediato
+            layer2.style.filter = `blur(${Math.min(scrolled * 0.05, 10)}px)`; // Desenfoque progresivo
         };
 
+        // Escucha el evento de scroll y actualiza la animación inmediatamente
         window.addEventListener('scroll', handleScroll);
 
         // Asegúrate de que la página empiece en la parte superior
@@ -55,11 +56,8 @@ const MainPage = () => {
                     onClick={() => document.querySelector('.section1').scrollIntoView({ behavior: 'smooth' })} 
                 />
             </div>
-
-
         </div>
     );
 };
 
 export default MainPage;
-

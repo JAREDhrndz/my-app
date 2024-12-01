@@ -1,9 +1,4 @@
 /* src/MainPage.css */
-body{
-    overflow-x: hidden;
-    overflow-y: auto;
-}
-
 .main-page {
     height: auto;
     display: flex;
@@ -12,7 +7,6 @@ body{
     align-items: center;
     text-align: center;
     color: rgb(0, 0, 0);
-
 }
 
 .parallax-container {
@@ -42,21 +36,20 @@ body{
 }
 
 .layer2 {
-    background-image: url('./assets/capa5.png');
+    background-image: url('./assets/capa2.png');
     z-index: 2;
-    position: absolute; /* Asegúrate de que esté posicionada correctamente */
+    position: absolute;
     background-size: cover;
     background-repeat: no-repeat;
-    background-attachment: fixed; /* Aplica el efecto de paralaje */
-    background-position: center; /* Centra la imagen */
+    background-attachment: fixed;
+    background-position: center; 
 }
-
 
 .layer3 {
     background: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0) 10%), 
-                url('./assets/capa4.png');
+                url('./assets/capa3.png');
     z-index: 3;
-    background-size: cover; /* Asegúrate de que la imagen cubra el área */
+    background-size: cover;
     background-repeat: no-repeat;
 }
 
@@ -83,7 +76,7 @@ p {
     font-weight: normal;
 }
 
-#span2{
+#span2 {
     font-weight: bold;
 }
 
@@ -100,4 +93,14 @@ p {
 .image-content img {
     max-width: 100%;
     height: auto;
+}
+
+/* Ajustes para pantallas pequeñas (móviles) */
+@media (max-width: 768px) {
+    .parallax.layer2 {
+        margin-top: 50%;
+        transform: scale(0.8);
+        background-size: 120% 80%;
+        height: 47%; 
+    }
 }

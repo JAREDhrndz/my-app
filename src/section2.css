@@ -2,8 +2,10 @@
 .section2 {
     display: flex;
     justify-content: center;
-    align-items: center;
-    min-height: 100vh;
+    align-items: top;
+    min-height: auto;
+    margin-bottom: 10%;
+    margin-top: 5%;
 }
 
 .image-container {

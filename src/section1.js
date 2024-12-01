@@ -1,9 +1,8 @@
 // src/Section1.js
 import React from 'react';
 import './section1.css';
-import image1 from './assets/image-1.jpg';
-import image2 from './assets/image-2.png';
-import { Link } from 'react-router-dom';
+import image1 from './assets/image-1.png';
+import image2 from './assets/image-2.jpg';
 
 const Section1 = () => {
     return (
@@ -12,7 +11,7 @@ const Section1 = () => {
                 <div className="text-content">
                     <h2>¿Quiénes Somos?</h2>
                     <p>
-                    En Inmobiliaria y Constructora CANESA S.A. de C.V., nos especializamos en la construcción de viviendas de calidad en Durango. Fundada en 2024, nos caracterizamos por nuestra ética, compromiso y respeto por el desarrollo ordenado de la ciudad, siempre buscando la satisfacción total de nuestros clientes.
+                    En Inmobiliaria y Constructora CANESA S.A. de C.V., nos especializamos en la construcción de viviendas de calidad en Durango. Fundada en 2004, nos caracterizamos por nuestra ética, compromiso y respeto por el desarrollo ordenado de la ciudad, siempre buscando la satisfacción total de nuestros clientes.
                     </p>
                 </div>
                 <div className="image-content" id='banner1'>

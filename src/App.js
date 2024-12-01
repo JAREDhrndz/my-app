@@ -2,7 +2,6 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Mainpage from './Mainpage';
-import Section1 from './section1';
 import Login from './Login';
 import Navbar from './navbar';
 
@@ -15,7 +14,10 @@ import GestionUsuarios from './GestionUsuarios';
 
 
 import './App.css';
+import Section1 from './section1';
 import Section2 from './section2';
+import Section3 from './section3';
+
 import Menu from './menu';
 import MenuNew from './MenuNuevo';
 import Citas from './citas';
@@ -33,6 +35,7 @@ function App() {
                             <Mainpage />
                             <Section1 />
                             <Section2 />
+                            <Section3 />
                         </>
                     } 
                 />

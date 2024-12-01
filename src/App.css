@@ -5,7 +5,11 @@
 html, body{
   scrollbar-width: thin;
   scrollbar-color: #2d2d2d #171717;
+  background-color: #000000;
+  overflow-x: hidden;
 }
+
+
 
 .App-logo {
   height: 40vmin;
