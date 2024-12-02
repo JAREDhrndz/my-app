@@ -18,7 +18,7 @@ const GestionServicios = () => {
   // Función para cargar los servicios
   const fetchServicios = async () => {
     try {
-      const response = await fetch('http://localhost/backend/getServicios.php');
+      const response = await fetch('http://canesa.shop/backend/getServicios.php');
       const data = await response.json();
       setServicios(data);
     } catch (error) {
@@ -40,7 +40,7 @@ const GestionServicios = () => {
   const handleDelete = async (id) => {
     console.log("Eliminar servicio con ID:", id);
     try {
-      const response = await fetch('http://localhost/backend/deleteServicio.php', {
+      const response = await fetch('http://canesa.shop/backend/deleteServicio.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
@@ -87,7 +87,7 @@ const GestionServicios = () => {
       formDataToSend.append('Descripcion', formData.Descripcion);
       formDataToSend.append('Costo', formData.Costo);
 
-      const response = await fetch('http://localhost/backend/addServicio.php', {
+      const response = await fetch('http://canesa.shop/backend/addServicio.php', {
         method: 'POST',
         body: formDataToSend,
       });
@@ -122,7 +122,7 @@ const GestionServicios = () => {
     console.log("Datos enviados al servidor:", data);
 
     try {
-      const response = await fetch("http://localhost/backend/updateServicio.php", {
+      const response = await fetch("http://canesa.shop/backend/updateServicio.php", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

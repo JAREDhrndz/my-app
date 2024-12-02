@@ -1,8 +1,5 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "canesa";
+require 'db.php'; // Se incluye el archivo de conexión
 
 $data = json_decode(file_get_contents("php://input"), true);
 
@@ -13,7 +10,7 @@ $telefono = $data['telefono'];
 $direccion = $data['direccion'];
 
 // Validar los datos, y realizar el registro en la base de datos
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli($host, $username, $password, $dbname);
 
 if ($conn->connect_error) {
     die("Conexión fallida: " . $conn->connect_error);

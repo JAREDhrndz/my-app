@@ -1,5 +1,5 @@
 <?php
-include 'conexionBD.php';
+include 'db.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
     $inputData = json_decode(file_get_contents('php://input'), true); // Obtener datos JSON enviados

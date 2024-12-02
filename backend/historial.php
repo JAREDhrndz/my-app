@@ -1,20 +1,8 @@
 <?php
 header('Content-Type: application/json');
 
-// Configuración de conexión a la base de datos
-$host = 'localhost';
-$dbname = 'canesa';
-$username = 'root';
-$password = '';
-
-// Conexión a la base de datos
-try {
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    echo json_encode(['error' => 'Error de conexión: ' . $e->getMessage()]);
-    exit;
-}
+// Incluir la configuración de la conexión a la base de datos
+require 'db.php';  // Este archivo ahora maneja la conexión a la base de datos
 
 // Obtener la tabla de la URL
 $table = isset($_GET['table']) ? $_GET['table'] : '';

@@ -15,7 +15,7 @@ const Citas = () => {
   useEffect(() => {
     const cargarServicios = async () => {
       try {
-        const response = await fetch('http://localhost/backend/getServicios.php');
+        const response = await fetch('http://canesa.shop/backend/getServicios.php');
         if (!response.ok) {
           throw new Error('Error al obtener los servicios');
         }
@@ -64,7 +64,7 @@ const Citas = () => {
     console.log('Datos que se enviarán al backend:', nuevaCita);
 
     // Enviar los datos al backend (PHP)
-    const response = await fetch('http://localhost/backend/addCitas.php', {
+    const response = await fetch('http://canesa.shop/backend/addCitas.php', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',

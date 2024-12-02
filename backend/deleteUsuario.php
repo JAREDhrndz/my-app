@@ -3,13 +3,8 @@ header('Access-Control-Allow-Origin: *'); // Permitir solicitudes de cualquier o
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE'); // Permitir los métodos GET, POST, PUT y DELETE
 header('Access-Control-Allow-Headers: Content-Type'); // Permitir cabeceras como Content-Type
 
-// Resto del código de tu archivo
-$conexion = new mysqli("localhost", "root", "", "canesa");
-
-if ($conexion->connect_error) {
-    echo json_encode(["status" => "error", "message" => "Error en la conexión a la base de datos"]);
-    exit;
-}
+// Incluir la conexión a la base de datos
+require 'db.php'; // Esto reemplaza la conexión directa con los datos
 
 if (isset($_GET['Num_usuario'])) {
     $numUsuario = $_GET['Num_usuario'];

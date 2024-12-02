@@ -1,14 +1,8 @@
 <?php
 header('Content-Type: application/json');
 
-// Configuración de conexión a la base de datos
-$conexion = new mysqli("localhost", "root", "", "canesa");
-
-// Verificar conexión
-if ($conexion->connect_error) {
-    echo json_encode(["status" => "error", "message" => "Error en la conexión a la base de datos"]);
-    exit;
-}
+// Incluir la conexión desde db.php
+require 'db.php';
 
 // Obtener datos enviados desde el cliente
 $nombre = $_POST['Nombre'];

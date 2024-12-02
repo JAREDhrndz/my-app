@@ -26,7 +26,7 @@ const GestionTrabajadores = () => {
 
     const fetchTrabajadores = async () => {
         try {
-            const response = await fetch('http://localhost/backend/getTrabajadores.php');
+            const response = await fetch('http://canesa.shop/backend/getTrabajadores.php');
             if (!response.ok) throw new Error('Error al obtener los trabajadores');
             const data = await response.json();
             setTrabajadores(data);
@@ -49,8 +49,8 @@ const GestionTrabajadores = () => {
 
         try {
             const url = id
-                ? 'http://localhost/backend/updateTrabajador.php'  // Actualización
-                : 'http://localhost/backend/addTrabajador.php';   // Insertar
+                ? 'http://canesa.shop/backend/updateTrabajador.php'  // Actualización
+                : 'http://canesa.shop/backend/addTrabajador.php';   // Insertar
 
             const response = await fetch(url, {
                 method: 'POST',
@@ -82,7 +82,7 @@ const GestionTrabajadores = () => {
 
     const handleDelete = async (id) => {
         try {
-            const response = await fetch('http://localhost/backend/deleteTrabajador.php', {
+            const response = await fetch('http://canesa.shop/backend/deleteTrabajador.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',

@@ -22,7 +22,7 @@ const GestionVentas = () => {
   useEffect(() => {
     const fetchVentas = async () => {
       try {
-        const response = await fetch('http://localhost/backend/getVentas.php');
+        const response = await fetch('http://canesa.shop/backend/getVentas.php');
         const data = await response.json();
         setVentas(data);
       } catch (error) {
@@ -34,7 +34,7 @@ const GestionVentas = () => {
 
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`http://localhost/backend/deleteVentas.php?id=${id}`, {
+      const response = await fetch(`http://canesa.shop/backend/deleteVentas.php?id=${id}`, {
         method: 'GET',
       });
 
@@ -92,7 +92,7 @@ const GestionVentas = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost/backend/addVentas.php', {
+      const response = await fetch('http://canesa.shop/backend/addVentas.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -123,7 +123,7 @@ const GestionVentas = () => {
     e.preventDefault();
     console.log('Datos que se van a enviar:', formData);
     try {
-        const response = await fetch(`http://localhost/backend/updateVentas.php`, {
+        const response = await fetch(`http://canesa.shop/backend/updateVentas.php`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

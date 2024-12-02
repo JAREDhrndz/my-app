@@ -1,10 +1,7 @@
 <?php
 header('Content-Type: application/json');
 
-$host = 'localhost';
-$db = 'canesa';
-$user = 'root';
-$password = '';
+require 'db.php';  // Se incluye el archivo db.php para la conexión a la base de datos
 
 $nombre = $_POST['nombre'];
 $cargo = $_POST['cargo'];
@@ -13,7 +10,6 @@ $correo_electronico = $_POST['correo_electronico'];
 $numero_empleado = $_POST['id']; // id enviado desde el frontend
 
 try {
-    $pdo = new PDO("mysql:host=$host;dbname=$db", $user, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     $stmt = $pdo->prepare("UPDATE trabajadores SET Nombre = ?, Cargo = ?, Telefono = ?, Correo_Electronico = ? WHERE Numero_empleado = ?");

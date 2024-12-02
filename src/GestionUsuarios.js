@@ -22,7 +22,7 @@ const GestionUsuarios = () => {
   useEffect(() => {
     const fetchUsuarios = async () => {
       try {
-        const response = await fetch('http://localhost/backend/getUsuarios.php');
+        const response = await fetch('http://canesa.shop/backend/getUsuarios.php');
         const data = await response.json();
         setUsuarios(data);
       } catch (error) {
@@ -34,7 +34,7 @@ const GestionUsuarios = () => {
 
   const handleDelete = async (numUsuario) => {
     try {
-      const response = await fetch(`http://localhost/backend/deleteUsuario.php?Num_usuario=${numUsuario}`, {
+      const response = await fetch(`http://canesa.shop/backend/deleteUsuario.php?Num_usuario=${numUsuario}`, {
         method: 'DELETE',
       });
   
@@ -71,7 +71,7 @@ const GestionUsuarios = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost/backend/addUsuario.php', {
+      const response = await fetch('http://canesa.shop/backend/addUsuario.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -105,7 +105,7 @@ const GestionUsuarios = () => {
         delete datosActualizados.Contraseña; // Elimina la contraseña si está vacía
       }
   
-      const response = await fetch(`http://localhost/backend/updateUsuario.php`, {
+      const response = await fetch(`http://canesa.shop/backend/updateUsuario.php`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

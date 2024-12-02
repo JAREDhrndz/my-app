@@ -1,9 +1,6 @@
 <?php
-// Definir las credenciales de conexión a la base de datos
-$host = 'localhost';  // Dirección del servidor de base de datos
-$dbname = 'canesa'; // Nombre de la base de datos
-$username = 'root'; // Usuario de la base de datos
-$password = ''; // Contraseña de la base de datos
+// Incluir la conexión a la base de datos desde db.php
+require 'db.php';
 
 try {
     // Crear una nueva instancia de PDO para la conexión a la base de datos

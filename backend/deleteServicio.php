@@ -1,15 +1,11 @@
 <?php
 header('Content-Type: application/json');
-$host = 'localhost';
-$db = 'canesa';
-$user = 'root';
-$password = '';
+require 'db.php'; // Incluir la conexión de base de datos
 
 $id_servicio = $_POST['id']; // Asegúrate de que el parámetro se llame 'id' en la solicitud POST
 error_log("ID recibido para eliminar: " . $id_servicio);  // Agrega esto para verificar el ID
 
 try {
-    $pdo = new PDO("mysql:host=$host;dbname=$db", $user, $password);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     $stmt = $pdo->prepare("DELETE FROM servicios WHERE Id = ?");

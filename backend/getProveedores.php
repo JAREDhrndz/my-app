@@ -1,12 +1,7 @@
 <?php
 header('Content-Type: application/json');
 
-$conexion = new mysqli("localhost", "root", "", "canesa");
-
-if ($conexion->connect_error) {
-    echo json_encode(["status" => "error", "message" => "Error en la conexión a la base de datos"]);
-    exit;
-}
+require 'db.php'; // Se incluye la conexión desde db.php
 
 $query = "SELECT * FROM proveedores";
 $result = $conexion->query($query);

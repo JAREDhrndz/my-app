@@ -3,10 +3,10 @@
 header('Content-Type: application/json');
 
 // Configuración de la conexión
-$host = "localhost";
-$username = "root";
-$password = "";
-$dbname = "canesa";
+$host = "auth-db1682.hstgr.io";
+$username = "u965417688_SuperAdmi";
+$password = "p4rf%ES8C9%U@DD";
+$dbname = "u965417688_CANESA";
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);

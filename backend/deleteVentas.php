@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: application/json');
-include 'dbConnection.php';
+include 'db.php';
 
 $id = $_GET['id'];
 

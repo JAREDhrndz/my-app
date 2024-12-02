@@ -27,7 +27,7 @@ const Login = () => {
     console.log('Datos enviados al backend:', data);
 
     try {
-        const response = await fetch('http://localhost/backend/submit.php', {
+        const response = await fetch('http://canesa.shop/backend/submit.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data),
@@ -47,7 +47,7 @@ const Login = () => {
             setMensaje(result.mensaje);
 
             if (result.status === 'success') {
-                const usuarioResponse = await fetch(`http://localhost/backend/getUsuarioLogeado.php?correo=${correo}`);
+                const usuarioResponse = await fetch(`http://canesa.shop/backend/getUsuarioLogeado.php?correo=${correo}`);
 
                 if (usuarioResponse.ok) {
                     const usuarioData = await usuarioResponse.json();
@@ -102,7 +102,7 @@ const Login = () => {
 
         const data = { nombre, correo: correoRegistro, contraseña: contraseñaRegistro, telefono };
         try {
-            const response = await fetch('http://localhost/backend/register.php', {
+            const response = await fetch('http://canesa.shop/backend/register.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data),

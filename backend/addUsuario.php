@@ -1,20 +1,15 @@
 <?php
 header('Content-Type: application/json');
 
+// Incluir la conexión desde db.php
+require 'db.php'; // Aquí se incluirá la conexión a la base de datos
+
 // Leer los datos en formato JSON
 $data = json_decode(file_get_contents("php://input"), true);
 
 // Validar si los datos necesarios están presentes
 if (!isset($data['Nombre'], $data['Correo_Electronico'], $data['Telefono'], $data['Direccion'], $data['Tipo_usuario'], $data['Contraseña'])) {
     echo json_encode(["status" => "error", "message" => "Faltan datos"]);
-    exit;
-}
-
-// Establecer conexión con la base de datos
-$conexion = new mysqli("localhost", "root", "", "canesa");
-
-if ($conexion->connect_error) {
-    echo json_encode(["status" => "error", "message" => "Error en la conexión a la base de datos"]);
     exit;
 }
 

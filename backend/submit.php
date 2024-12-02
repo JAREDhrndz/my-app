@@ -7,18 +7,8 @@ if (isset($data['correo_electronico']) && isset($data['contraseña'])) {
     $correo = $data['correo_electronico'];
     $contraseña = $data['contraseña'];
 
-    $host = 'localhost'; 
-    $user = 'root'; 
-    $password = ''; 
-    $dbname = 'canesa'; 
-
-    // Crear conexión
-    $conn = new mysqli($host, $user, $password, $dbname);
-
-    // Verificar conexión
-    if ($conn->connect_error) {
-        die("Conexión fallida: " . $conn->connect_error);
-    }
+    // Incluir la conexión a la base de datos desde db.php
+    require 'db.php'; 
 
     // Consulta SQL para obtener el tipo de usuario
     $sql = "SELECT Tipo_usuario FROM usuarios WHERE Correo_Electronico = ? AND Contraseña = ?";

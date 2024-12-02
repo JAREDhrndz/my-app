@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: application/json');
-include 'dbConnection.php'; // Archivo que gestiona la conexión a la base de datos
+include 'db.php'; // Archivo que gestiona la conexión a la base de datos
 
 try {
     $query = $conn->prepare("SELECT * FROM ventas");

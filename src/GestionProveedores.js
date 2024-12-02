@@ -26,7 +26,7 @@ const GestionProveedores = () => {
     
     const fetchProveedores = async () => {
         try {
-            const response = await fetch('http://localhost/backend/getProveedores.php');
+            const response = await fetch('http://canesa.shop/backend/getProveedores.php');
             if (!response.ok) throw new Error('Error al obtener los proveedores');
             const data = await response.json();
             setProveedores(data);
@@ -62,8 +62,8 @@ const GestionProveedores = () => {
 
         try {
             const url = id
-                ? 'http://localhost/backend/updateProveedor.php'
-                : 'http://localhost/backend/addProveedor.php';
+                ? 'http://canesa.shop/backend/updateProveedor.php'
+                : 'http://canesa.shop/backend/addProveedor.php';
 
             const response = await fetch(url, {
                 method: 'POST',
@@ -89,7 +89,7 @@ const GestionProveedores = () => {
 
     const handleDelete = async (id) => {
         try {
-            const response = await fetch('http://localhost/backend/deleteProveedor.php', {
+            const response = await fetch('http://canesa.shop/backend/deleteProveedor.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',

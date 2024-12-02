@@ -1,17 +1,7 @@
 <?php
 header("Content-Type: application/json");
 
-$host = "localhost";
-$user = "root";
-$password = "";
-$dbname = "canesa";
-
-$conn = new mysqli($host, $user, $password, $dbname);
-
-if ($conn->connect_error) {
-    echo json_encode(["status" => "error", "message" => "Conexión fallida: " . $conn->connect_error]);
-    exit();
-}
+require 'db.php';  // Incluye la conexión a la base de datos desde db.php
 
 $data = json_decode(file_get_contents("php://input"), true);
 
@@ -34,4 +24,3 @@ if (isset($data['id'], $data['nombre'], $data['descripcion'], $data['costo'])) {
 
 $conn->close();
 ?>
-

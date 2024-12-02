@@ -16,13 +16,13 @@ const HistoricoMenu = () => {
   useEffect(() => {
     const fetchData = async () => {
       const responses = await Promise.all([
-        fetch('http://localhost/backend/historial/getUsuarios_Copy.php'),
-        fetch('http://localhost/backend/historial/getProveedorServicio_Copy.php'),
-        fetch('http://localhost/backend/historial/getProveedores_Copy.php'),
-        fetch('http://localhost/backend/historial/getVentas_Copy.php'),
-        fetch('http://localhost/backend/historial/getCitas_Copy.php'),
-        fetch('http://localhost/backend/historial/getServicios_Copy.php'),
-        fetch('http://localhost/backend/historial/getTrabajadores_Copy.php'),
+        fetch('http://canesa.shop/backend/historial/getUsuarios_Copy.php'),
+        fetch('http://canesa.shop/backend/historial/getProveedorServicio_Copy.php'),
+        fetch('http://canesa.shop/backend/historial/getProveedores_Copy.php'),
+        fetch('http://canesa.shop/backend/historial/getVentas_Copy.php'),
+        fetch('http://canesa.shop/backend/historial/getCitas_Copy.php'),
+        fetch('http://canesa.shop/backend/historial/getServicios_Copy.php'),
+        fetch('http://canesa.shop/backend/historial/getTrabajadores_Copy.php'),
       ]);
       const data = await Promise.all(responses.map(res => res.json()));
       setData({
